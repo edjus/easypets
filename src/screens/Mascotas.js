@@ -1,21 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import {StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
-import { useDispatch,useSelector } from 'react-redux';
-import { login,logout } from '../redux/actions/auth';
-import { validateEmail, validatePassword} from '../validation/userValidation'
+import React from 'react';
+import {StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements'
 
 
 const mascotas = [
   {
     nombre: 'Pipo',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    raza: 'Caniche'
+    foto: 'https://t2.ea.ltmcdn.com/es/images/6/9/3/enfermedades_mas_comunes_en_perros_caniches_23396_600_square.jpg',
+    raza: 'Caniche',
+    fechaNacimiento: "12-12-2015"
   },
   {
     nombre: 'Rocky',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-    raza: 'Golde Retriver'
+    foto: 'https://t2.ea.ltmcdn.com/es/razas/5/5/0/img_55_golden-retriever-o-cobrador-dorado_0_600.jpg',
+    raza: 'Golde Retriver',
+    fechaNacimiento: "20-06-2017"
+  },
+  {
+    nombre: 'Manchas',
+    foto: 'https://www.hola.com/imagenes/estar-bien/20200828174216/razas-perro-dalmata-gt/0-859-148/dalmata-t.jpg',
+    raza: 'Dalmata',
+    fechaNacimiento: "05-01-2021"
   },
 ]
 
@@ -31,7 +36,7 @@ export default function Mascotas () {
       {
         mascotas.map((perro, i) => (
           <ListItem key={i} bottomDivider onPress={() => enlazar(perro)}>
-            <Avatar source={{uri: perro.avatar_url}} />
+            <Avatar source={{uri: perro.foto}} />
             <ListItem.Content>
               <ListItem.Title>{perro.nombre}</ListItem.Title>
               <ListItem.Subtitle>{perro.raza}</ListItem.Subtitle>
