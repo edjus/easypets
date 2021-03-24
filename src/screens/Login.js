@@ -3,7 +3,7 @@ import {StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react
 import { useDispatch,useSelector } from 'react-redux';
 import { login,logout } from '../redux/actions/auth';
 import { validateEmail, validatePassword} from '../validation/userValidation'
-
+import Header from '../components/Header';
 
 export default function Login (props){
     const [email, setEmail] = useState('')
@@ -79,6 +79,7 @@ export default function Login (props){
     
         return (
             <View  style={styles.container}>
+             <Header name="Login" openDrawer={props.navigation.openDrawer}/>
                 <Text style={styles.logo}>EasyPet</Text>
                 <View style={styles.inputView}>
                     <TextInput
@@ -119,12 +120,13 @@ export default function Login (props){
 
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#003f5c',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+  container: {
+    backgroundColor: "#fff",
+    paddingTop:40,
+    alignItems:"center",
+    flex:1
+
+  },
     logo:{
       fontWeight:"bold",
       fontSize:50,

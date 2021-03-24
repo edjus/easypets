@@ -5,6 +5,7 @@ import {Picker} from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 const defaultImage='../assets/icon.png'
+import Header from '../components/Header';
 export default class Task extends React.Component{
 
     state={
@@ -109,6 +110,7 @@ export default class Task extends React.Component{
     render(){
         return(
             <View style={styles.container}>
+                  <Header name="Task" openDrawer={this.props.navigation.openDrawer}/>
                 <Text style={styles.logo}>EasyPet</Text>
                 <View style={styles.inputView}>
                 <TextInput
@@ -194,12 +196,13 @@ export default class Task extends React.Component{
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#003f5c',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+  container: {
+    backgroundColor: "#fff",
+    paddingTop:40,
+    alignItems:"center",
+    flex:1
+
+  },
     logo:{
       fontWeight:"bold",
       fontSize:50,

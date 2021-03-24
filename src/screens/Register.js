@@ -1,6 +1,6 @@
 import React from 'react';
 import{StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
-
+import Header from '../components/Header';
 
 export default class Register  extends React.Component{
 
@@ -17,6 +17,7 @@ export default class Register  extends React.Component{
     render(){
         return(
             <View style={styles.container}>
+            <Header name="Register" openDrawer={this.props.navigation.openDrawer}/>
                 <Text style={styles.logo}>EasyPet</Text>
                 <View style={styles.inputView}>
                 <TextInput
@@ -75,12 +76,13 @@ export default class Register  extends React.Component{
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#003f5c',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+  container: {
+    backgroundColor: "#fff",
+    paddingTop:40,
+    alignItems:"center",
+    flex:1
+
+  },
     logo:{
       fontWeight:"bold",
       fontSize:50,
