@@ -33,7 +33,7 @@ export default function Mascotas ({navigation}) {
   return (
     <View>
     <View style={styles.container}>
-    <Header name="Mascotas" openDrawer={navigation.openDrawer}/>
+      <Header name="Mascotas" openDrawer={navigation.openDrawer}/>
     </View>
     <View>
       <Text style={styles.logo}> Mis Mascotas</Text>

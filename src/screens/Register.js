@@ -1,7 +1,9 @@
 import React from 'react';
-import{StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import{StyleSheet,Text, View, TextInput, TouchableOpacity } from 'react-native';
 import Header from '../components/Header';
+import {Picker} from '@react-native-picker/picker'
 
+const userTypeValues=[ "Client", "Dog Walker", "Food Provider","Events Provider"  ,"Pet Shop"];
 export default class Register  extends React.Component{
 
     state={
@@ -9,6 +11,7 @@ export default class Register  extends React.Component{
         lastName:"",
         email:"",
         password:"",
+        userType:"",
     }
 
     showLoginForm=()=> {
@@ -50,6 +53,21 @@ export default class Register  extends React.Component{
                    placeholderTextColor="white"
                     onChangeText={text=>this.setState({password:text})}
                 />
+                 </View>
+                 <View style={styles.inputView}>
+                 <Text  style={styles.pickerText}>What&rsquo;s your interest?</Text>
+                    <Picker
+                          selectedValue={this.state.userType}
+                          style={styles.inputText}
+                          onValueChange={(itemValue, itemIndex) =>
+                            this.setState({userType: itemValue})
+                          }>
+                          {userTypeValues.map((value)=>{
+                            return (<Picker.Item label={value} value={value} />)
+                          })}
+                    </Picker>
+
+
                  </View>
             
                 <TouchableOpacity>
@@ -96,15 +114,23 @@ const styles = StyleSheet.create({
       height:50,
       marginBottom:20,
       justifyContent:"center",
-      padding:20
+     
     },
     inputText:{
       height:50,
       color:"white",
+      marginLeft:50,
     },
     forgot:{
-      color:"white",
-      fontSize:11
+      color:"red",
+      fontSize:15,
+   
+     
+    },
+    pickerText:{
+      color:"red",
+      fontSize:15,
+      marginBottom:10,
     },
     loginBtn:{
       width:"80%",

@@ -12,9 +12,12 @@ import Register from './screens/Register';
 import Task from './screens/Task';
 import DetalleMascota from './screens/DetalleMascota';
 import Mascotas from './screens/Mascotas';
+import DogWalkers from './screens/DogWalkers'
+import DogMap from './screens/Map'
 import {Provider} from 'react-redux';
 import configureStore from './redux/configureStore'
-import { Ionicons, MaterialCommunityIcons,Foundation,FontAwesome5,AntDesign  } from '@expo/vector-icons';
+
+import { Ionicons, MaterialCommunityIcons,Foundation,FontAwesome5,FontAwesome,AntDesign  } from '@expo/vector-icons';
 
 const Header =({name, openDrawer})=> (
   <View style={styles.header}>
@@ -64,7 +67,15 @@ class Sidebar extends React.Component {
        
         {
           name:"Mascotas",
+          icon:<MaterialCommunityIcons name="dog" size={32} color="red" />
+        },
+        {
+          name:"DogWalkers",
           icon:<Foundation name="guide-dog" size={32} color="red" />
+        },
+        {
+          name:"DogMap",
+          icon:<FontAwesome name="map" size={32} color="red" />
         },
 
       ]
@@ -95,7 +106,9 @@ const Drawer = createDrawerNavigator(
     Register:{ screen: Register},
     Task:{ screen: Task},
     Profile:{screen: DetalleMascota},
-    Mascotas:{screen:Mascotas}
+    Mascotas:{screen:Mascotas},
+    DogWalkers:{screen:DogWalkers},
+    DogMap:{screen:DogMap}
 
   },
   {

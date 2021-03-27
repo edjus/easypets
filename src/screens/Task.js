@@ -129,20 +129,19 @@ export default class Task extends React.Component{
                 />
                  </View>
                  <View style={styles.inputView} >
-    
-
-                <Text  style={styles.pickerText}>What&rsquo;s the priority?</Text>
-                <Picker
-                      selectedValue={this.state.priority}
-                      style={styles.inputText}
-                      onValueChange={(itemValue, itemIndex) =>
-                        this.setState({priority: itemValue})
-                      }>
-                      <Picker.Item label="LOW" value="LOW" />
-                      <Picker.Item label="MEDIUM" value="MEDIUM" />
-                      <Picker.Item label="HIGH" value="HIGH" />
-                      <Picker.Item label="URGENT" value="URGENT" />
-                        </Picker>
+  
+                    <Text  style={styles.pickerText}>What&rsquo;s the priority?</Text>
+                    <Picker
+                          selectedValue={this.state.priority}
+                          style={styles.inputText}
+                          onValueChange={(itemValue, itemIndex) =>
+                            this.setState({priority: itemValue})
+                          }>
+                          <Picker.Item label="LOW" value="LOW" />
+                          <Picker.Item label="MEDIUM" value="MEDIUM" />
+                          <Picker.Item label="HIGH" value="HIGH" />
+                          <Picker.Item label="URGENT" value="URGENT" />
+                    </Picker>
                 </View>
 
                 <View style={styles.inputView}>
