@@ -1,4 +1,4 @@
-export const categories = [
+export const productCategories = [
   { id: 1, name: 'Toy'},
   { id: 2, name: 'Clothes'},
   { id: 3, name: 'Food'},

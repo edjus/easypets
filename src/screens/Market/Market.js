@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList, Text, View, TouchableHighlight, Image } from 'react-native';
 import styles from './styles';
-import { products, categories } from '../../database/dataArrays';
+import { products, productCategories } from '../../database/dataArrays';
 import { getCategoryName } from '../../database/MockDataAPI';
 import DropDownPicker from 'react-native-dropdown-picker';
 
@@ -32,8 +32,8 @@ export default class Market extends React.Component {
     this.setState({filteredProducts: filtered});
   };
 
-  renderCategories = () => {
-    const allOptions = [...categories, {id: 0, name: 'all'}];
+  renderproductCategories = () => {
+    const allOptions = [...productCategories, {id: 0, name: 'all'}];
     return allOptions.map((category) => {
       return {label: category.name.toUpperCase(), value: category.id}
     })
@@ -43,7 +43,7 @@ export default class Market extends React.Component {
     return (
       <View>
         <DropDownPicker 
-          items={this.renderCategories()}
+          items={this.renderproductCategories()}
           defaultValue={0}
           containerStyle={{height: 40}}
           style={{backgroundColor: '#fafafa'}}

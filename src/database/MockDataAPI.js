@@ -1,8 +1,8 @@
-import { recipes, categories, ingredients } from './dataArrays';
+import { recipes, productCategories, ingredients } from './dataArrays';
 
 export function getCategoryById(categoryId) {
   let category;
-  categories.map(data => {
+  productCategories.map(data => {
     if (data.id == categoryId) {
       category = data;
     }
@@ -32,7 +32,7 @@ export function getIngredientUrl(ingredientID) {
 
 export function getCategoryName(categoryId) {
   let name;
-  categories.map(data => {
+  productCategories.map(data => {
     if (data.id == categoryId) {
       name = data.name;
     }
