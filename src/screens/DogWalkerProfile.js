@@ -5,11 +5,14 @@ import {Picker} from '@react-native-picker/picker'
 
 const userTypeValues=[ "Client", "Dog Walker", "Food Provider","Events Provider"  ,"Pet Shop"];
 import { Rating, AirbnbRating } from 'react-native-ratings';
+import Calendar from '../components/Calendar/Calendar'
 export default class DogWalkerProfile  extends React.Component{
 
     state={
         profileData:this.props.data,
-        parent:this.props.parentScreen
+        parent:this.props.parentScreen,
+        calendar:false,
+        navigation: this.props.navigation
     }
 
     goBack=()=> {
@@ -17,13 +20,19 @@ export default class DogWalkerProfile  extends React.Component{
       
         if(this.props.parentScreen=="Map"){
            console.log("go back  clicked" , typeof(this.props.parentScreen), " ", this.state.parent)
-           this.props.navigation.navigate('DogMap');
+           this.state.navigation.navigate('DogMap');
         }else if(this.props.parentScreen=="DogWalkers"){
-           this.props.navigation.navigate("DogWalkers");
+           this.state.navigation.navigate("DogWalkers");
         }
     }
+    showCalendar=()=> {
+      this.setState({calendar:true})
+
+    }
     render(){
+      if (!this.state.calendar){
         return(
+           
             <View style={styles.container}>
             {/* <Header name="Register" openDrawer={this.props.navigation.openDrawer}/> */}
                 <Text style={styles.logo}>Dog Walker</Text>
@@ -65,7 +74,9 @@ export default class DogWalkerProfile  extends React.Component{
                 />
                  </View>
                
-            
+                 <TouchableOpacity style={styles.loginBtn} onPress={()=>this.showCalendar()}>
+                    <Text style={styles.loginText} >Show Calendar</Text>
+                </TouchableOpacity>
                 <TouchableOpacity style={styles.loginBtn}>
                     <Text style={styles.loginText}>Hire</Text>
                 </TouchableOpacity>
@@ -76,9 +87,14 @@ export default class DogWalkerProfile  extends React.Component{
                 
 
             </View>
-
-
+        
         )
+      }else{
+        return(
+          <Calendar name={this.state.profileData.name}  selectedWalker={this.state.profileData} calendario={this.state.profileData.calendario}/>
+        )
+      }
+          
 
     }
 
@@ -90,7 +106,7 @@ export default class DogWalkerProfile  extends React.Component{
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
-    paddingTop:40,
+    paddingTop:10,
     alignItems:"center",
     flex:1
 
