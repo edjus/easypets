@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList, Text, View, TouchableHighlight, Image } from 'react-native';
 import styles from './styles';
 import { products, productCategories } from '../../database/dataArrays';
-import { getCategoryName } from '../../database/MockDataAPI';
+import { getProductCategoryName } from '../../database/MockDataAPI';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 export default class Market extends React.Component {
@@ -22,7 +22,7 @@ export default class Market extends React.Component {
       <View style={styles.container}>
         <Image style={styles.photo} source={{ uri: item.photo_url }} />
         <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.category}>{getCategoryName(item.categoryId)}</Text>
+        <Text style={styles.category}>{getProductCategoryName(item.categoryId)}</Text>
       </View>
     </TouchableHighlight>
   );

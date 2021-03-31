@@ -1,31 +1,22 @@
 import React from 'react';
 import {
+  FlatList,
   ScrollView,
   Text,
   View,
+  TouchableOpacity,
   Image,
   Dimensions,
   TouchableHighlight
 } from 'react-native';
 import styles from './styles';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import { getIngredientName, getProductCategoryName } from '../../database/MockDataAPI';
-import BackButton from '../../components/BackButton/BackButton';
+import { getIngredientName, getCategoryName, getCategoryById } from '../../database/MockDataAPI';
 import CustomButton from '../../components/CustomButton/CustomButton';
 
 const { width: viewportWidth } = Dimensions.get('window');
 
-export default class ProductScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      headerTransparent: 'true',
-      headerLeft: () => <BackButton
-        onPress={() => {
-          navigation.goBack();
-        }}
-      />
-    };
-  };
+export default class EventScreen extends React.Component {
 
   constructor(props) {
     super(props);
@@ -45,14 +36,15 @@ export default class ProductScreen extends React.Component {
   onPressIngredient = item => {
     var name = getIngredientName(item);
     let ingredient = item;
-    this.props.navigation.navigate('Payment', { ingredient, name });
+    this.props.navigation.navigate('Ingredient', { ingredient, name });
   };
 
   render() {
     const { activeSlide } = this.state;
     const { navigation } = this.props;
     const item = navigation.getParam('item');
-    const category = getProductCategoryName(item.categoryId);
+    const category = getCategoryById(item.categoryId);
+    const title = getCategoryName(category.id);
 
     return (
       <ScrollView style={styles.container}>
@@ -92,19 +84,34 @@ export default class ProductScreen extends React.Component {
         <View style={styles.infoRecipeContainer}>
           <Text style={styles.infoRecipeName}>{item.title}</Text>
           <View style={styles.infoContainer}>
-            <Text style={styles.category}> {category.toUpperCase()}</Text>
+            <TouchableHighlight
+              onPress={() => navigation.navigate('RecipesList', { category, title })}
+            >
+              <Text style={styles.category}>{getCategoryName(item.categoryId).toUpperCase()}</Text>
+            </TouchableHighlight>
           </View>
 
           <View style={styles.infoContainer}>
-            <Image style={styles.infoPhoto} source={require('../../../assets/icons/price.png')} />
-            <Text style={styles.infoRecipe}>US$ {item.price} </Text>
+            <Image style={styles.infoPhoto} source={require('../../../assets/icons/time.png')} />
+            <Text style={styles.infoRecipe}>{item.time} minutes </Text>
           </View>
 
           <View style={styles.infoContainer}>
             <CustomButton
-              title="Buy now"
+              title="Details"
               onPress={() => {
-                navigation.navigate('Payment', { item });
+                let ingredients = item.ingredients;
+                let title = 'Ingredients for ' + item.title;
+                navigation.navigate('IngredientsDetails', { ingredients, title });
+              }}
+            />
+          </View>
+
+          <View style={styles.infoContainer}>
+            <CustomButton
+              title="Booking"
+              onPress={() => {
+                navigation.navigate('Booking', { item });
               }}
             />
           </View>

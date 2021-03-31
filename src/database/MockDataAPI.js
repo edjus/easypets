@@ -1,4 +1,4 @@
-import { recipes, productCategories, ingredients } from './dataArrays';
+import { events, productCategories, categories, ingredients } from './dataArrays';
 
 export function getCategoryById(categoryId) {
   let category;
@@ -30,7 +30,7 @@ export function getIngredientUrl(ingredientID) {
   return url;
 }
 
-export function getCategoryName(categoryId) {
+export function getProductCategoryName(categoryId) {
   let name;
   productCategories.map(data => {
     if (data.id == categoryId) {
@@ -40,32 +40,42 @@ export function getCategoryName(categoryId) {
   return name;
 }
 
-export function getRecipes(categoryId) {
-  const recipesArray = [];
-  recipes.map(data => {
-    if (data.categoryId == categoryId) {
-      recipesArray.push(data);
+export function getCategoryName(categoryId) {
+  let name;
+  categories.map(data => {
+    if (data.id == categoryId) {
+      name = data.name;
     }
   });
-  return recipesArray;
+  return name;
+}
+
+export function getEvents(categoryId) {
+  const eventsArray = [];
+  events.map(data => {
+    if (data.categoryId == categoryId) {
+      eventsArray.push(data);
+    }
+  });
+  return eventsArray;
 }
 
 // modifica
-export function getRecipesByIngredient(ingredientId) {
-  const recipesArray = [];
-  recipes.map(data => {
+export function getEventsByIngredient(ingredientId) {
+  const eventsArray = [];
+  events.map(data => {
     data.ingredients.map(index => {
       if (index[0] == ingredientId) {
-        recipesArray.push(data);
+        eventsArray.push(data);
       }
     });
   });
-  return recipesArray;
+  return eventsArray;
 }
 
 export function getNumberOfRecipes(categoryId) {
   let count = 0;
-  recipes.map(data => {
+  events.map(data => {
     if (data.categoryId == categoryId) {
       count++;
     }

@@ -7,11 +7,11 @@ import {
   TouchableHighlight
 } from 'react-native';
 import styles from './styles';
-import { getCategoryName } from '../../database/MockDataAPI';
+import { getProductCategoryName } from '../../database/MockDataAPI';
 import BackButton from '../../components/BackButton/BackButton';
-import BuyProductButton from '../../components/BuyProductButton/BuyProductButton';
 import { Card } from 'react-native-elements';
 import { RadioGroup } from 'react-native-btr';
+import CustomButton from '../../components/CustomButton/CustomButton';
 
 export default class PaymentScreen extends React.Component {
   
@@ -61,7 +61,7 @@ export default class PaymentScreen extends React.Component {
   render() {
     const { navigation } = this.props;
     const item = navigation.getParam('item');
-    const category = getCategoryName(item.categoryId);
+    const category = getProductCategoryName(item.categoryId);
 
     return (
       <ScrollView style={styles.container}>
@@ -88,7 +88,7 @@ export default class PaymentScreen extends React.Component {
         </Card>
 
           <View style={styles.infoContainer}>
-            <BuyProductButton
+            <CustomButton
               onPress={() => {
                 navigation.navigate('BuySuccess', {price: item.price});
               }}

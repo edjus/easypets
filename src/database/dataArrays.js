@@ -4,6 +4,7 @@ export const productCategories = [
   { id: 3, name: 'Food'},
 ];
 
+
 export const products = [
   {
     productId: 122,
@@ -131,7 +132,6 @@ export const products = [
       'https://images-na.ssl-images-amazon.com/images/I/71BktpxSLOL._AC_SX569_.jpg',
     ],
     price: 10.99,
-    ingredients: [[0, '200ml'], [1, '5g'], [2, '300g']],
     description:
       '-- KONG - Flyer - Durable Rubber Flying Disc Dog Toy - for Large Dogs . The natural rubber makes for a softer, forgiving catch during fetch. It also delivers a dynamic rebound if your dog misses the initial toss.'
   },
@@ -205,6 +205,151 @@ export const products = [
     description:
       '-- Marvel Legends Spiderman Dog Costume. This Spiderman costume for dogs is a top pick for Halloween and can be worn all year round too, making it the best Halloween costume for dogs.'
   },
+];
+
+export const categories = [
+  {
+    id: 1,
+    name: 'Birthdays',
+    photo_url:
+    'https://dogbarstpete.com/wp-content/uploads/2020/01/BirthdayDogs.png'
+  },
+  {
+    id: 2,
+    name: 'Funerals',
+    photo_url: 'https://img.auctiva.com/imgdata/1/3/2/6/2/4/0/webimg/1040022677_o.jpg'
+  },
+];
+
+export const events = [
+  {
+    recipeId: 1,
+    categoryId: 1,
+    title: 'Oatmeal Cookies',
+    photo_url: 'https://www.texanerin.com/content/uploads/2019/06/nobake-chocolate-cookies-1-650x975.jpg',
+    photosArray: [
+      'https://www.texanerin.com/content/uploads/2019/06/nobake-chocolate-cookies-1-650x975.jpg',
+      "https://namelymarly.com/wp-content/uploads/2018/04/20180415_Beet_Lasagna_10.jpg",
+      'https://advancelocal-adapter-image-uploads.s3.amazonaws.com/image.al.com/home/bama-media/width600/img/news_impact/photo/burger-fijpg-57e7e5907630c2ad.jpg',
+      'https://img.thedailybeast.com/image/upload/c_crop,d_placeholder_euli9k,h_1439,w_2560,x_0,y_0/dpr_1.5/c_limit,w_1044/fl_lossy,q_auto/v1492718105/articles/2013/09/24/burger-king-s-new-french-fries-took-ten-years-to-develop/130923-gross-burger-tease_izz59e',
+      'https://aht.seriouseats.com/images/2012/02/20120221-193971-fast-food-fries-Burger-King-fries-2.jpg'
+    ],
+    time: '15',
+    ingredients: [[0, '200ml'], [1, '5g'], [2, '300g']],
+    description:
+      '-- Start with cleaned and peeled russet potatoes that you have cut into 3/8-inch match sticks. Place in bowl of very cold water: keep rinsing and changing the water until the water is clear; drain thoroughly and dry with paper towels or a clean lint-free kitchen towel.\n\n -- Meanwhile, you preheat your hot oil to 350 degrees F. Place prepared taters in oil and cook about 5 minutes. They will have that blond-tone color to them. \n\n -- Note: Once you add cold potatoes to the hot oil, the temperature of your oil is going to drop - you want it to be somewhere between 330 - 325 degrees F. \n\n -- Remove from oil; drain and cool. Now - either refrigerate until ready to finish cooking, or cool completely and freeze up to 3 months. To freeze properly - place completely cooled fries in single layer on tray and place in freezer until frozen. Then bag them.\n\n -- To finish cooking - preheat your oil to 400* F. Add your cold fries (which will drop the oil temp - which is fine because you want it near the 375 degrees F. temp) and cook a few minutes until done. Lightly salt them and shake well so that the salt distributes well and they are not salty.'
+  },
+  {
+    recipeId: 2,
+    categoryId: 1,
+    title: 'Triple Berry Smoothie',
+    photo_url:
+      'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/delish-how-to-make-a-smoothie-horizontal-1542310071.png?crop=0.803xw:0.923xh;0.116xw,0.00510xh&resize=768:*',
+    photosArray: [
+      'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/delish-how-to-make-a-smoothie-horizontal-1542310071.png?crop=0.803xw:0.923xh;0.116xw,0.00510xh&resize=768:*',
+      'https://www.vitamix.com/media/other/images/xVitamix-Triple-Berry-Smoothie-square-crop__1.jpg.pagespeed.ic.OgTC3ILD3R.jpg',
+      'http://images.media-allrecipes.com/userphotos/960x960/3798204.jpg',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrzui8MM6W66I29VZwVvcjpGv99JW3O1owgupc3KwB65rhAyrZ'
+    ],
+    time: '10',
+    ingredients: [
+      [59, '1'],
+      [60, '1/2 lbs'],
+      [61, '1/2 liters'],
+    ],
+    description: 'In a blender, combine all ingredients and blend until smooth. Then divide between 2 cups and top with blackberries, if desired.'
+  },
+  {
+    recipeId: 3,
+    categoryId: 1,
+    title: 'Vegan Cookies',
+    photo_url: 'https://www.texanerin.com/content/uploads/2018/06/no-bake-lactation-cookies-1-650x975.jpg',
+    photosArray: [
+      'https://www.texanerin.com/content/uploads/2018/06/no-bake-lactation-cookies-1-650x975.jpg',
+      'https://ichef.bbci.co.uk/news/660/cpsprodpb/B2C0/production/_106106754_vegnuggets976.jpg',
+      'https://pixel.nymag.com/imgs/daily/grub/2017/11/22/22-mcds-chicken-tenders.w330.h330.jpg',
+      'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fcdn-img.health.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Flarge_16_9%2Fpublic%2Fstyles%2Fmain%2Fpublic%2Fgettyimages-508510211.jpg%3Fitok%3Dh-Uryi8r&w=400&c=sc&poi=face&q=85'
+    ],
+    time: '30',
+    ingredients: [
+      [0, '2 quarts'],
+      [16, '1'],
+      [12, '1 cup'],
+      [18, '1 cup'],
+      [19, '1 teaspoon'],
+      [1, '2 teaspoons'],
+      [4, '1/4 teaspoons'],
+      [7, '1/8 teaspoons'],
+      [20, '1/2 teaspoons'],
+      [21, '4']
+    ],
+    description:
+      '-- Beat the egg and then combine it with water in a bowl. Stir. Combine the flour, salt, MSG, pepper, onion powder and garlic powder in a gallon size zip lock bag. Pound each of the breast filets until about 1/4-inch thick. Then cut into bite sized pieces. Coat each piece with the flour mixture by shaking in the zip lock bag. Remove and coat in the egg mixture. Then coat in the flour mixture again. Shake to coat. Deep fry at 375 degrees for 10-12 minutes, until browned and crispy.'
+  },
+  {
+    recipeId: 4,
+    categoryId: 2,
+    title: 'Pumpkin Spice Cookies',
+    photo_url:
+      'https://www.texanerin.com/content/uploads/2018/11/pumpkin-spice-cookies-4-650x975.jpg',
+    photosArray: [
+      'https://www.texanerin.com/content/uploads/2018/11/pumpkin-spice-cookies-4-650x975.jpg',
+      'https://cdn.junglecreations.com/wp/junglecms/2018/07/4164c5bd-wide-thumbnail.jpg',
+      'https://pinchofyum.com/wp-content/uploads/Crunchwrap-Inside.jpg',
+      'https://monsonmadethis.com/wp-content/uploads/2017/10/IMG_20171015_161017_025-e1533869302263.jpg'
+    ],
+    time: '45',
+    ingredients: [
+      [0, '2 tablespoons'],
+      [22, '1/2'],
+      [23, '2 tablespoons'],
+      [7, '2 cloves'],
+      [3, '1 teaspoon'],
+      [24, '1 tablespoon'],
+      [25, '1 lb'],
+      [1, '2 teaspoons'],
+      [4, '2 teaspoons'],
+      [26, '15 oz'],
+      [27, '8'],
+      [28, '2'],
+      [29, '1 cup']
+    ],
+    description:
+      '-- In a medium pot over medium heat, heat 1 tablespoon oil. Add onion and cook until soft, 5 minutes. Add garlic and cook until fragrant, 1 minute more. Add tomato paste and stir to coat onion and garlic. Add ground beef and cook, breaking up meat with a wooden spoon, until no longer pink, 6 minutes. Drain fat.\n\n -- Return beef to pot and season with chili powder, paprika, salt, and pepper. Add tomato sauce and kidney beans. Bring to a boil, then reduce heat and let simmer 15 minutes. Add some chili to center of each tortilla, leaving room to fold in edges. Top with Fritos, then cheddar. Fold edges of tortillas toward the center, creating pleats. Invert Crunchwraps so pleats are on the bottom and stay together.\n\n -- In medium skillet over medium heat, heat remaining tablespoon oil. Add a Crunchwrap seam side down and cook until tortilla is golden, 3 to 5 minutes per side. Repeat with remaining Crunchwraps'
+  },
+  {
+    recipeId: 5,
+    categoryId: 2,
+    title: 'Lazania',
+    photo_url: 'https://images8.alphacoders.com/817/817353.jpg',
+    photosArray: [
+      'https://previews.123rf.com/images/somegirl/somegirl1509/somegirl150900048/46103208-top-view-of-a-delicious-traditional-italian-lasagna-made-with-minced-beef-bolognese-sauce-topped-wit.jpg',
+      'https://truffle-assets.imgix.net/87f324e4-YOUTUBE-NO-TXT.00_03_19_14.Imagen_fija001.jpg',
+      'https://images4.alphacoders.com/817/817350.jpg'
+    ],
+    time: 60,
+    ingredients: [
+      [36, '1 large'],
+      [25, '1 pound'],
+      [51, '5 cloves'],
+      [52, '1 pound'],
+      [53, '1 pound'],
+      [54, '1 28 ounce can'],
+      [23, '2 6 ounce can'],
+      [55, '2 tablespoons'],
+      [56, '1/4 cup'],
+      [10, '1/2 cup'],
+      [1, '1/2 teaspoons'],
+      [58, '1 teaspoon'],
+      [4, '1/4 teaspoons'],
+      [16, '1 large'],
+      [46, '1 pound'],
+      [48, '1 cup'],
+      [57, '30 ounces']
+    ],
+    description:
+      '-- Cook noodles according to package directions; drain. Meanwhile, in a Dutch oven, cook sausage, beef and onion over medium heat 8-10 minutes or until meat is no longer pink, breaking up meat into crumbles. Add garlic; cook 1 minute. Drain. Stir in tomatoes, tomato paste, water, sugar, 3 tablespoons parsley, basil, fennel, 1/2 teaspoon salt and pepper; bring to a boil. Reduce heat; simmer, uncovered, 30 minutes, stirring occasionally. In a small bowl, mix egg, ricotta cheese, and remaining parsley and salt. Preheat oven to 375°. Spread 2 cups meat sauce into an ungreased 13x9-in. baking dish. Layer with 3 noodles and a third of the ricotta mixture. Sprinkle with 1 cup mozzarella cheese and 2 tablespoons Parmesan cheese.\n\n -- Repeat layers twice. Top with remaining meat sauce and cheeses (dish will be full). Bake, covered, 25 minutes. Bake, uncovered, 25 minutes longer or until bubbly. Let stand 15 minutes before serving.'
+  }
 ];
 
 export const ingredients = [
