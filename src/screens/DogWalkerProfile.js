@@ -6,14 +6,19 @@ import {Picker} from '@react-native-picker/picker'
 const userTypeValues=[ "Client", "Dog Walker", "Food Provider","Events Provider"  ,"Pet Shop"];
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import Calendar from '../components/Calendar/Calendar'
+import Map from './Map';
 export default class DogWalkerProfile  extends React.Component{
 
     state={
         profileData:this.props.data,
         parent:this.props.parentScreen,
         calendar:false,
+        map:false,
         navigation: this.props.navigation
     }
+
+
+    
 
     goBack=()=> {
       console.log("go back  clicked" , typeof(this.props.parentScreen), " ", this.state.parent)
@@ -29,8 +34,12 @@ export default class DogWalkerProfile  extends React.Component{
       this.setState({calendar:true})
 
     }
+    showShowMap=()=> {
+      this.setState({map:true})
+
+    }
     render(){
-      if (!this.state.calendar){
+      if ((!this.state.calendar)&&( !this.state.map)){
         return(
            
             <View style={styles.container}>
@@ -73,25 +82,31 @@ export default class DogWalkerProfile  extends React.Component{
                     onChangeText={text=>this.setState({lastName:text})}
                 />
                  </View>
-               
-                 <TouchableOpacity style={styles.loginBtn} onPress={()=>this.showCalendar()}>
-                    <Text style={styles.loginText} >Show Calendar</Text>
+                 <View style={{ flex: 1, flexDirection: 'row' }}>
+                 <TouchableOpacity  onPress={()=>this.showShowMap()}>
+                 <Image style={styles.roundButton1} source={require('../../assets/mapa.png')} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.loginBtn}>
-                    <Text style={styles.loginText}>Hire</Text>
+                 <TouchableOpacity  onPress={()=>this.showCalendar()}>
+                 <Image style={styles.roundButton2} source={require('../../assets/calendar.png')} />
+                    {/* <Text style={styles.loginText} >Show Calendar</Text> */}
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.loginBtn} onPress={()=>this.goBack()}>
-                    <Text style={styles.loginText} >Go Back</Text>
+      
+                </View>
+                <TouchableOpacity  onPress={()=>this.goBack()}>
+                <Image style={styles.roundButton3} source={require('../../assets/back.png')}/>
+                    {/* <Text style={styles.loginText} >Go Back</Text> */}
                 </TouchableOpacity>
-
-                
 
             </View>
         
         )
-      }else{
+      }else if (this.state.calendar){
         return(
           <Calendar name={this.state.profileData.name}  selectedWalker={this.state.profileData} calendario={this.state.profileData.calendario}/>
+        )
+      }else{
+        return(
+          <Map   selectedWalker={this.state.profileData}/>
         )
       }
           
@@ -152,7 +167,48 @@ const styles = StyleSheet.create({
       marginTop:40,
       marginBottom:10
     },
+    roundButton1: {
+      width: 100,
+      height: 100,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 10,
+      marginTop:30,
+      marginRight:20,
+      borderRadius: 100,
+      backgroundColor: 'orange',
+    },
+    roundButton2: {
+      marginTop: 20,
+      marginLeft:40,
+      width: 150,
+      height: 150,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 20,
+      borderRadius: 100,
+      backgroundColor: '#fb5b5a',
+    },
+    roundButton3: {
+      width: 100,
+      height: 100,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 0,
+      marginTop:5,
+      marginBottom:20,
+      marginRight:40,
+      borderRadius: 100,
+      backgroundColor: 'blue',
+    },
     loginText:{
       color:"white"
-    }
+    },
+    buttonImageIconStyle: {
+      padding: 10,
+      margin: 5,
+      height: 25,
+      width: 25,
+      resizeMode: 'stretch',
+    },
   });

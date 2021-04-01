@@ -43,6 +43,16 @@ showMessage=()=>{
   ])
 }
 
+function array_move(arr, old_index, new_index) {
+  if (new_index >= arr.length) {
+      var k = new_index - arr.length + 1;
+      while (k--) {
+          arr.push(undefined);
+      }
+  }
+  arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+  return arr; // for testing
+};
 export default class  Map extends React.Component {
 
       state={
@@ -50,16 +60,21 @@ export default class  Map extends React.Component {
                 places:[],
                 poligono:[],
                 distance:2000,
-               renderProfile:false,
-            selectedWalker:{}
+                renderProfile:false,
+                selectedWalker:{}
             
             
       }
       
       
   componentDidMount(){
-    let poligonoData=DogWalkerData;
-
+    let poligonoData;
+    if(this.props.selectedWalker){
+      var index = DogWalkerData.findIndex(x => x.email ===this.props.selectedWalker.email);
+    poligonoData=array_move(DogWalkerData,index,0);
+    }else{
+      poligonoData=DogWalkerData;
+    }
     let newPlaces= DogWalkerData.map(item=>{
       return item.name
     })
@@ -83,17 +98,19 @@ export default class  Map extends React.Component {
       <View style={{flex:1, flexDirection:'row'}}>
         <View>
           <Text style={styles.title}> {item.name} </Text>
+          <Rating defaultRating={item.rating} imageSize={15} ratingColor='#f1c40a' ratingBackgroundColor='red'/>
         </View>
+        
         <View>
           <TouchableOpacity style={{height:50,width:50, justifyContent:"center",alignItems:"center"}} onPress={()=>this.goToDogWalkerProfile(item)}>
             <Text style={styles.hire} >Hire</Text>
           </TouchableOpacity>
           </View>
-      </View>   
-      <Rating defaultRating={item.rating} imageSize={25} ratingColor='#f1c40a' ratingBackgroundColor='red'/>
+      </View>  
       <Image style={styles.image} source={{uri:item.photo}} ></Image>
       
     </View>
+
   )
 
 
@@ -116,8 +133,6 @@ export default class  Map extends React.Component {
 
   
       this._carousel.snapToItem(index)
-
-                           
 
 
   }
@@ -173,7 +188,7 @@ export default class  Map extends React.Component {
                         containerCustomStyle={styles.carousel}
                         sliderWidth={Dimensions.get('window').width}
                         onSnapToItem={(index)=>this.onCarouselItemChange(index)}
-                        
+                        initialNumToRender={this.state.poligono.length}
                         itemWidth={200}
                       />
                       
@@ -253,7 +268,7 @@ const styles = StyleSheet.create({
     },
     title:{
       color:'white',
-      fontSize:20,
+      fontSize:16,
       alignSelf:'center'
 
     },
@@ -264,7 +279,7 @@ const styles = StyleSheet.create({
 
     },
     image:{
-      height:90,
+      height:80,
       width:200,
       bottom:0,
       position:'absolute',

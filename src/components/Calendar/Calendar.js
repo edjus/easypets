@@ -1,8 +1,9 @@
 import React from 'react';
-import{StyleSheet,Text, View,ScrollView, Button, TextInput, TouchableOpacity } from 'react-native';
+import{StyleSheet,Text, View,ScrollView, Button, Image, TextInput, TouchableOpacity } from 'react-native';
 import Celda from './Cell.js'
 import DogWalkerProfile from '../../screens/DogWalkerProfile'
-
+import { PrivateValueStore } from '@react-navigation/core';
+import HiredDogWalkers from '../../screens/HiredDogWalkers'
 
 /*
 0 :No disponible
@@ -18,12 +19,14 @@ export default class Calendar  extends React.Component{
     state = {
         num_columnas:7,
         num_filas:24,
-        datos:this.props.calendario,   
+        datos:this.props.calendario,
+        reservedDays:[],   
         Owner: this.props.name,
         renderProfile:false,
         parent:this.props.parentScreen,
         navigation: this.props.navigation,
-        selectedWalker:this.props.selectedWalker
+        selectedWalker:this.props.selectedWalker,
+        renderHiredWalker:false,
       }
       
       goBack=()=> {
@@ -106,21 +109,74 @@ export default class Calendar  extends React.Component{
         );
         
     }
+        getDaysByIndex=(id)=>{
+            switch(id){
+                case 0: return "Mon"
+                case 1: return "Tue"
+                case 2: return "Wen"
+                case 3: return "Thr"
+                case 4: return "Fri"
+                case 5: return "Sat"
+                case 6: return "Sun"
+
+            }
+
+        }
         reservar=()=>{
         let reservado=false;
+        let reservedDays=[]
 
+    
         this.state.datos.map((item, index)=>{
             item.map((subitem,subIndex)=>{
                 if(subitem==3){
                     reservado=true;
-                    return;
+                    
                 }
             })
             
         })
         if (!reservado){
             alert("Please reserve!")
+            return; 
         }
+
+        for(let i=0; i<7; i++){
+            let DayName=this.getDaysByIndex(i);
+            
+            console.log("dia:" , DayName)
+            let day={}
+            day['name']=DayName,
+            //day[DayName]={'horas':[]}
+            day['horas']=[];
+            let cambio=false;
+            let horario='';
+            cambio=false;
+            for(let j=0; j<23; j++){
+              
+                if(this.state.datos[j][i]==3){
+
+                    if(!cambio){
+                        horario+= j.toString()
+                        cambio=true;
+                    }
+                
+             }else if((this.state.datos[j][i]!=3) &&(cambio)){
+                horario+='-'+ j.toString()
+                //day[DayName]['horas'].push(horario);
+                day['horas'].push(horario);
+                horario=''
+                cambio=false;
+             }
+            
+            }
+            
+            reservedDays.push(day)
+        }
+        console.log("reserved days:" , reservedDays)
+        
+        this.setState({reservedDays:reservedDays , renderHiredWalker:true})
+       
         console.log("reservando");
 
     }
@@ -142,11 +198,12 @@ export default class Calendar  extends React.Component{
             
         }
 
-
-    }
+    }    
+  
+    
 
       render(){
-        if (!this.state.renderProfile){
+        if ((!this.state.renderProfile)&&(!this.state.renderHiredWalker)){
             
 
         return (
@@ -167,30 +224,27 @@ export default class Calendar  extends React.Component{
                             </View>
                         );
                     })}
-                    <View style={[{ width: "90%", margin:20}]}>
-                    <Button
-                            onPress={this.reservar}
-                            title="Reserve"
-                            color="#841584"
-                            accessibilityLabel="Learn more about this purple button"
-                            />   
-                    </View>      
-                    <View style={[{ width: "90%", margin:20}]}>
-                    <Button
-                            onPress={this.goBack}
-                            title="Go back"
-                            color="blue"
-                            accessibilityLabel="Learn more about this purple button"
-                            />   
+                    <View style={{ flex: 1, flexDirection: 'row' }}>
+                    <TouchableOpacity  onPress={()=>this.reservar()}>
+                        <Image style={styles.roundButton3} source={require('../../../assets/hired.png')}/>
+                    </TouchableOpacity> 
+                    <TouchableOpacity  onPress={()=>this.goBack()}>
+                <Image style={styles.roundButton3} source={require('../../../assets/back.png')}/>
+                    {/* <Text style={styles.loginText} >Go Back</Text> */}
+                </TouchableOpacity> 
                     </View>     
             </View>
               
             </ScrollView>
 
         );
-        }else{
+        }else if(!this.state.renderHiredWalker){
             return(
                 <DogWalkerProfile data={this.state.selectedWalker} navigation={this.state.navigation} parentScreen={"DogWalkers"}/> 
+            )
+        }else{
+            return(
+                <HiredDogWalkers dogWalkerProfile={this.state.selectedWalker} reservedDays={this.state.reservedDays}/>
             )
         }
 
@@ -231,6 +285,41 @@ const styles = StyleSheet.create({
           backgroundColor: 'dodgerblue',
           flex: 1,
           aspectRatio: 1
-      },   
+      },  
+      roundButton1: {
+        width: 100,
+        height: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 10,
+        marginTop:30,
+        marginRight:20,
+        borderRadius: 100,
+        backgroundColor: 'orange',
+      },
+      roundButton2: {
+        marginTop: 20,
+        marginLeft:40,
+        width: 150,
+        height: 150,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+        borderRadius: 100,
+        backgroundColor: '#fb5b5a',
+      },
+      roundButton3: {
+        width: 100,
+        height: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 0,
+        marginTop:5,
+        marginBottom:20,
+        marginRight:20,
+        marginLeft:30,
+        borderRadius: 100,
+        backgroundColor: 'blue',
+      }, 
   
   });

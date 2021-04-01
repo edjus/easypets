@@ -8,9 +8,7 @@ function  CeldaNoDisponible(){
     return (
       <View style={styles.container}>
         <View style={styles.celdaNoDisponible} >
-            
-                <Text> X</Text>
-            
+          
         </View>
       </View>
     );
@@ -103,7 +101,7 @@ const styles = StyleSheet.create({
       flex: 1,
       flexDirection: 'row',
       borderWidth: 1,
-      borderColor: '#F44336',
+      borderColor: 'blue',
     },
     celdaDisponible: {
       backgroundColor: 'forestgreen',
