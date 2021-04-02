@@ -92,19 +92,8 @@ export default class EventScreen extends React.Component {
           </View>
 
           <View style={styles.infoContainer}>
-            <Image style={styles.infoPhoto} source={require('../../../assets/icons/time.png')} />
-            <Text style={styles.infoRecipe}>{item.time} minutes </Text>
-          </View>
-
-          <View style={styles.infoContainer}>
-            <CustomButton
-              title="Details"
-              onPress={() => {
-                let ingredients = item.ingredients;
-                let title = 'Ingredients for ' + item.title;
-                navigation.navigate('IngredientsDetails', { ingredients, title });
-              }}
-            />
+            <Image style={styles.infoPhoto} source={require('../../../assets/icons/price.png')} />
+            <Text style={styles.infoRecipe}>US$ {item.price} </Text>
           </View>
 
           <View style={styles.infoContainer}>

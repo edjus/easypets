@@ -145,6 +145,7 @@ export default class BookingScreen extends React.Component {
         <Card>
           <Text style={styles.infoRecipe}>Details</Text>
           <Text style={styles.infoDescriptionRecipe}>{item.title} - {category}</Text>
+          <Text style={styles.infoDescriptionRecipe}>{item.description}</Text>
           <Text style={styles.infoDescriptionRecipe}>US$ {item.price} </Text>
           <Card.Divider/>
           <Text style={styles.infoRecipe}>Place </Text>
