@@ -16,8 +16,16 @@ import DogWalkers from './screens/DogWalkers'
 import DogMap from './screens/Map'
 import {Provider} from 'react-redux';
 import configureStore from './redux/configureStore'
+import Profile from './screens/Profile'
+import { Ionicons, MaterialCommunityIcons,Foundation,FontAwesome5,FontAwesome,AntDesign,Entypo  } from '@expo/vector-icons';
+import Market from './screens/Market/Market'
+import Events from './screens/Events/EventsScreen'
 
-import { Ionicons, MaterialCommunityIcons,Foundation,FontAwesome5,FontAwesome,AntDesign  } from '@expo/vector-icons';
+const profileData={
+  name: "John  Wick",
+  photo:'../../assets/johnWick.png',
+  email: 'IkillYouIfYouTouchMyDog@WickLove.com'
+}
 
 const Header =({name, openDrawer})=> (
   <View style={styles.header}>
@@ -49,17 +57,23 @@ class Sidebar extends React.Component {
   state = {
       routes:[
           {
-              name:"Login",
+              name:"LogIn/LogOut",
               icon:<AntDesign name="login" size={32} color="red" />
           },
+          // {
+          //     name:"Register",
+          //     icon:<FontAwesome5 name="user-plus" size={32} color="red" />
+          // },
           {
-              name:"Register",
-              icon:<FontAwesome5 name="user-plus" size={32} color="red" />
+              name:"Market",
+              icon: <Entypo name="shop" size={32} color="red" />
+
           },
           {
-              name:"Task",
-              icon:<Ionicons name="ios-settings" size={32} color="red" />
-          },
+            name:"Events",
+            icon:<FontAwesome name="birthday-cake" size={32} color="red" />
+
+        },
           {
             name:"Profile",
             icon:<FontAwesome5 name="dog" size={32} color="red" />
@@ -85,9 +99,11 @@ class Sidebar extends React.Component {
   render(){
       return (
           <View style={styles.container}>
-              <Image source={require("../assets/emptyProfile.png")} style={styles.profileImg}/>
-              <Text style={{fontWeight:"bold",fontSize:16,marginTop:10}}>Janna Doe</Text>
-              <Text style={{color:"gray",marginBottom:10}}>janna@doe.com</Text>
+              <TouchableOpacity onPress={()=>this.props.navigation.navigate('Profile')}>
+              <Image source={require("../assets/johnWick.png")} style={styles.profileImg} resizeMode="contain"/>
+              </TouchableOpacity>
+              <Text style={{fontWeight:"bold",fontSize:16,marginTop:10}}>{profileData.name}</Text>
+              <Text style={{color:"gray",marginBottom:10}}>{profileData.email}</Text>
               <View style={styles.sidebarDivider}></View>
               <FlatList
                   style={{width:"100%",marginLeft:30}}
@@ -102,17 +118,18 @@ class Sidebar extends React.Component {
 
 const Drawer = createDrawerNavigator(
   {
-    Login:{ screen: Login},
-    Register:{ screen: Register},
-    Task:{ screen: Task},
-    Profile:{screen: DetalleMascota},
+    'LogIn/LogOut':{ screen: Login},
+    // Register:{ screen: Register},
+    Market:{ screen: Market},
+    Events:{ screen:Events},
+    Profile:{screen: Profile},
     Mascotas:{screen:Mascotas},
     DogWalkers:{screen:DogWalkers},
     DogMap:{screen:DogMap}
 
   },
   {
-    initialRouteName: "Login",
+    initialRouteName: "LogIn/LogOut",
     unmountInactiveRoutes: true,
     headerMode: "none",
     contentComponent: props => <Sidebar {...props} />

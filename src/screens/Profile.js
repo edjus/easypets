@@ -7,14 +7,20 @@ const userTypeValues=[ "Client", "Dog Walker", "Food Provider","Events Provider"
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import Calendar from '../components/Calendar/Calendar'
 import Map from './Map';
+// import image from '../../assets/johnWick.jfif'
+
+const profileData={
+    name: "John  Wick",
+    photo:'../../assets/johnWick.jfif',
+    email: 'IkillYouIfYouTouchMyDog@WickLove.com'
+}
 export default class DogWalkerProfile  extends React.Component{
 
     state={
-        profileData:this.props.data,
-        parent:this.props.parentScreen,
-        calendar:false,
-        map:false,
-        navigation: this.props.navigation
+        name:profileData.name,
+        email:profileData.email,
+        photo:profileData.photo,
+        
     }
 
 
@@ -30,84 +36,49 @@ export default class DogWalkerProfile  extends React.Component{
            this.state.navigation.navigate("DogWalkers");
         }
     }
-    showCalendar=()=> {
-      this.setState({calendar:true})
-
-    }
-    showShowMap=()=> {
-      this.setState({map:true})
-
-    }
+   
+   
     render(){
-      if ((!this.state.calendar)&&( !this.state.map)){
+
         return(
            
             <View style={styles.container}>
-            {/* <Header name="Register" openDrawer={this.props.navigation.openDrawer}/> */}
-                <Text style={styles.logo}>Dog Walker</Text>
+            <Header name="Profile" openDrawer={this.props.navigation.openDrawer}/>
+                <Text style={styles.logo}>Profile</Text>
                 <View style={{flexDirection:"row" }}>
-                    <View style={{flex:1, marginLeft:50}}>
-                    <Image source={{uri:this.state.profileData.photo}}  style={{width:80, height:80,borderRadius:30}} />
-                    </View>
-                    <View style={{flex:1,marginRight:40}}>
-                    <AirbnbRating defaultRating={this.state.profileData.rating} size={20}/>
+                    <View style={{flex:1, alignSelf:'center'}}>
+                    <Image source={require('../../assets/johnWick.png')}  style={{width:120, height:200,alignSelf:'center'}} />
                     </View>
                 </View>
+                <Text style={styles.titleText}> Name</Text>
+                <View style={styles.inputView}>
+            
+                    <TextInput
+                        style={styles.inputText}
+                        placeholderTextColor="white"
+                        value={this.state.name}
+                        editable={true}
+                        onChangeText={text=>this.setState({name:text})}
+                    />
+                </View>
+                <Text style={styles.titleText}> Email</Text>
                 <View style={styles.inputView}>
                 <TextInput
                     style={styles.inputText}
-                    placeholderTextColor="white"
-                    value={"Name: " + this.state.profileData.name}
-                    editable={false}
-                    onChangeText={text=>this.setState({firsName:text})}
-                />
-                </View>
-                <View style={styles.inputView}>
-                <TextInput
-                    style={styles.inputText}
-                    value={"Distance: " + this.state.profileData.distance}
-                    editable={false}
+                    value={this.state.email}
+                    editable={true}
                    placeholderTextColor="white"
 
-                    onChangeText={text=>this.setState({lastName:text})}
+                    onChangeText={text=>this.setState({email:text})}
                 />
                  </View>
-                 <View style={styles.inputView}>
-                <TextInput
-                    style={styles.inputText}
-                    value={"Price: " + this.state.profileData.price}
-                    editable={false}
-                   placeholderTextColor="white"
-
-                    onChangeText={text=>this.setState({lastName:text})}
-                />
-                 </View>
-                 <View style={{ flex: 1, flexDirection: 'row' }}>
-                 <TouchableOpacity  onPress={()=>this.showShowMap()}>
-                 <Image style={styles.roundButton1} source={require('../../assets/mapa.png')} />
-                </TouchableOpacity>
-                 <TouchableOpacity  onPress={()=>this.showCalendar()}>
-                 <Image style={styles.roundButton2} source={require('../../assets/calendar.png')} />
-                    {/* <Text style={styles.loginText} >Show Calendar</Text> */}
-                </TouchableOpacity>
-      
-                </View>
-                <TouchableOpacity  onPress={()=>this.goBack()}>
-                <Image style={styles.roundButton3} source={require('../../assets/back.png')}/>
-                </TouchableOpacity>
+               
+                 
 
             </View>
         
         )
-      }else if (this.state.calendar){
-        return(
-          <Calendar name={this.state.profileData.name}  selectedWalker={this.state.profileData} calendario={this.state.profileData.calendario}/>
-        )
-      }else{
-        return(
-          <Map   selectedWalker={this.state.profileData}/>
-        )
-      }
+     
           
 
     }
@@ -120,7 +91,7 @@ export default class DogWalkerProfile  extends React.Component{
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
-    paddingTop:10,
+    paddingTop:40,
     alignItems:"center",
     flex:1
 
@@ -132,18 +103,24 @@ const styles = StyleSheet.create({
       marginBottom:20
     },
     inputView:{
-      width:"80%",
+      width:"90%",
       backgroundColor:"#465881",
       borderRadius:25,
-      height:50,
-      marginTop:20,
+      height:40,
+      marginTop:0,
       justifyContent:"center",
      
     },
     inputText:{
-      height:50,
+      height:30,
       color:"white",
-      marginLeft:50,
+      marginLeft:20,
+    },
+
+    titleText:{
+      height:50,
+      color:"red",
+      alignSelf:'center',
     },
     forgot:{
       color:"red",
