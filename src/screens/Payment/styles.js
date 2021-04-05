@@ -5,13 +5,23 @@ const { width: viewportWidth } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    flex: 1
+    flex: 1,
+    marginTop:40
   },
   carouselContainer: {
     minHeight: 250
   },
   carousel: {},
-
+  roundButton3: {
+    width: 100,
+    height: 100,
+    justifyContent: 'center',
+    padding: 0,
+    marginTop:5,
+    alignSelf:'center',
+    borderRadius: 100,
+    backgroundColor: 'blue',
+  },
   image: {
     ...StyleSheet.absoluteFillObject,
     width: '100%',

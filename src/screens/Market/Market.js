@@ -5,16 +5,20 @@ import { products, productCategories } from '../../database/dataArrays';
 import { getProductCategoryName } from '../../database/MockDataAPI';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Header from '../../components/Header';
+import Product from '../Product/ProductScreen'
 export default class Market extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      filteredProducts: products
+      filteredProducts: products,
+      item:{},
+      renderProduct:false,
     }
   }
 
   onPressProduct = item => {
-    this.props.navigation.navigate('Product', { item });
+    //this.props.navigation.navigate('Product', { item });
+    this.setState({renderProduct:true, item:item})
   };
 
   renderProducts = ({ item }) => (
@@ -40,6 +44,7 @@ export default class Market extends React.Component {
   };
 
   render() {
+    if(!this.state.renderProduct){
     return (
       <View style={{marginTop:40}}>
       <Header name="Market" openDrawer={this.props.navigation.openDrawer}/>
@@ -64,6 +69,11 @@ export default class Market extends React.Component {
         />
       </View>
     );
+    }else{
+      return(
+        <Product item={this.state.item} navigation={ this.props.navigation}/>
+      )
+    }
   }
 }
 

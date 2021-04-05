@@ -80,7 +80,7 @@ class Sidebar extends React.Component {
         },
        
         {
-          name:"Mascotas",
+          name:"MyPets",
           icon:<MaterialCommunityIcons name="dog" size={32} color="red" />
         },
         {
@@ -123,7 +123,7 @@ const Drawer = createDrawerNavigator(
     Market:{ screen: Market},
     Events:{ screen:Events},
     Profile:{screen: Profile},
-    Mascotas:{screen:Mascotas},
+    MyPets:{screen:Mascotas},
     DogWalkers:{screen:DogWalkers},
     DogMap:{screen:DogMap}
 

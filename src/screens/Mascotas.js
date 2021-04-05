@@ -24,7 +24,7 @@ const mascotas = [
   },
 ]
 
-export default function Mascotas ({navigation}) {
+export default function Mascotas (props) {
 
   const enlazar = (perro) => {
     return Alert.alert(`Llamar a detalle con -perro- ${perro.nombre}`);
@@ -32,10 +32,9 @@ export default function Mascotas ({navigation}) {
 
   return (
     <View>
-    <View style={styles.container}>
-      <Header name="Mascotas" openDrawer={navigation.openDrawer}/>
-    </View>
-    <View>
+    
+    <View style={{marginTop:40}}>
+    <Header name="MyPets" openDrawer={props.navigation.openDrawer}/>
       <Text style={styles.logo}> Mis Mascotas</Text>
       {
         mascotas.map((perro, i) => (

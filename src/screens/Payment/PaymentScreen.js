@@ -4,7 +4,8 @@ import {
   Text,
   View,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  TouchableOpacity
 } from 'react-native';
 import styles from './styles';
 import { getProductCategoryName } from '../../database/MockDataAPI';
@@ -12,7 +13,9 @@ import BackButton from '../../components/BackButton/BackButton';
 import { Card } from 'react-native-elements';
 import { RadioGroup } from 'react-native-btr';
 import CustomButton from '../../components/CustomButton/CustomButton';
-
+import BuySuccess from '../BuySuccessScreen';
+import Product from '../Product/ProductScreen'
+import Header from '../../components/Header';
 export default class PaymentScreen extends React.Component {
   
   // FIXME: No funciona el volver (no aparece)
@@ -45,6 +48,9 @@ export default class PaymentScreen extends React.Component {
           color: "#00cc99",
         },
       ],
+      renderBuySuccess:false,
+      renderProduct:false,
+      price:''
     };
   }
 
@@ -57,14 +63,25 @@ export default class PaymentScreen extends React.Component {
   );
 
   onPress = data => this.setState({ data });
-
+  renderBuySuccessScreen=(price)=>{
+    console.log("clicked render buy successs")
+    this.setState({price:price, renderBuySuccess:true})
+  }
+  goBack=(item)=> {
+     
+    this.setState({renderProduct:true })
+    
+  }
   render() {
+    if((!this.state.renderBuySuccess) &&(!this.state.renderProduct)){
     const { navigation } = this.props;
-    const item = navigation.getParam('item');
+    // const item = navigation.getParam('item');
+    const item=this.props.item;
     const category = getProductCategoryName(item.categoryId);
 
     return (
       <ScrollView style={styles.container}>
+       <Header name="Market" openDrawer={this.props.navigation.openDrawer}/>
         <Card>
           <Text style={styles.infoRecipe}>Address</Text>
           <Text style={styles.infoDescriptionRecipe}>
@@ -90,12 +107,25 @@ export default class PaymentScreen extends React.Component {
           <View style={styles.infoContainer}>
             <CustomButton
               onPress={() => {
-                navigation.navigate('BuySuccess', {price: item.price});
+               // navigation.navigate('BuySuccess', {price: item.price});
+               this.renderBuySuccessScreen(item.price) 
               }}
               title="Buy"
             />
           </View>
+          <TouchableOpacity  onPress={()=>this.goBack()}>
+                <Image style={styles.roundButton3} source={require('../../../assets/back.png')}/>
+        </TouchableOpacity>
       </ScrollView>
-    );
+    );}
+    else if(this.state.renderBuySuccess){
+      return(
+        <BuySuccess precio={this.state.price}/>
+      )
+    }else{
+      return(
+        <Product item={this.props.item} navigation={ this.props.navigation}/>
+      )
+    }
   }
 }

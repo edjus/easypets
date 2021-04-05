@@ -7,6 +7,7 @@ const userTypeValues=[ "Client", "Dog Walker", "Food Provider","Events Provider"
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import Calendar from '../components/Calendar/Calendar'
 import Map from './Map';
+
 export default class DogWalkerProfile  extends React.Component{
 
     state={
@@ -43,7 +44,7 @@ export default class DogWalkerProfile  extends React.Component{
         return(
            
             <View style={styles.container}>
-            {/* <Header name="Register" openDrawer={this.props.navigation.openDrawer}/> */}
+            <Header name="DogWalkers" openDrawer={this.props.navigation.openDrawer}/>
                 <Text style={styles.logo}>Dog Walker</Text>
                 <View style={{flexDirection:"row" }}>
                     <View style={{flex:1, marginLeft:50}}>
@@ -120,7 +121,7 @@ export default class DogWalkerProfile  extends React.Component{
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
-    paddingTop:10,
+    paddingTop:40,
     alignItems:"center",
     flex:1
 

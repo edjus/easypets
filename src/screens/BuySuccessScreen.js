@@ -2,9 +2,10 @@ import React from 'react';
 import {StyleSheet, Text, View, Image } from 'react-native';
 import { Icon } from 'react-native-elements'
 
-export default function BuySuccessScreen ({navigation}) {
+export default function BuySuccessScreen ({navigation,precio}) {
 
-  const price = navigation.getParam('price', 15.99);
+  // const price = navigation.getParam('price', 15.99);
+  const price=precio;
   return (
     <View  style={styles.container}>
       <Icon 

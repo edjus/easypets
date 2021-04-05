@@ -5,7 +5,8 @@ import {
   View,
   Image,
   TouchableHighlight, 
-  Button
+  Button,
+  TouchableOpacity
 } from 'react-native';
 import styles from './styles';
 import { getCategoryName } from '../../database/MockDataAPI';
@@ -16,8 +17,9 @@ import CustomButton from '../../components/CustomButton/CustomButton';
 import { Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DateTimePicker from '@react-native-community/datetimepicker';
-
-
+import BuySuccess from '../BuySuccessScreen'
+import Event from '../Event/EventScreen'
+import Header from '../../components/Header';
 export default class BookingScreen extends React.Component {
 
   constructor(props) {
@@ -56,6 +58,9 @@ export default class BookingScreen extends React.Component {
       date: new Date(),
       mode: 'date',
       show: false,
+      renderBuySuccess:false,
+      price:'',
+      renderEvent:false
     };
   }
 
@@ -88,7 +93,18 @@ export default class BookingScreen extends React.Component {
     this.showMode('time');
   };
 
+  renderBuySuccessScreen=(price)=>{
+
+    this.setState({price:price, renderBuySuccess:true})
+  }
+  goBack=(item)=> {
+     
+    this.setState({renderEvent:true })
+    
+  }
+
   render() {
+    if((!this.state.renderBuySuccess)&& (!this.state.renderEvent)){
     const { navigation } = this.props;
     //const item = navigation.getParam('item');
     const item=this.props.item
@@ -96,6 +112,7 @@ export default class BookingScreen extends React.Component {
 
     return (
       <ScrollView style={styles.container}>
+      <Header name="Events" openDrawer={this.props.navigation.openDrawer}/>
         <Card>
           <Text style={styles.infoRecipe}>Booking information</Text>
           <Input
@@ -167,12 +184,26 @@ export default class BookingScreen extends React.Component {
           <View style={styles.infoContainer}>
             <CustomButton
               onPress={() => {
-                navigation.navigate('BuySuccess', {price: item.price});
+                //navigation.navigate('BuySuccess', {price: item.price});
+                this.renderBuySuccessScreen(item.price)
               }}
               title="Buy"
             />
           </View>
+          <TouchableOpacity  onPress={()=>this.goBack()}>
+                <Image style={styles.roundButton3} source={require('../../../assets/back.png')}/>
+        </TouchableOpacity>
       </ScrollView>
-    );
+       );
+    }else if (!this.state.renderEvent){
+      return(
+        <BuySuccess precio={this.state.price}/>
+      )
+    }else{
+      return(
+        <Event item={this.props.item} category={this.props.category} navigation={this.props.navigation}/>
+      )
+    }
+   
   }
 }

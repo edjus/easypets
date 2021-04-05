@@ -13,7 +13,7 @@ import Slider from '@react-native-community/slider';
 var UbicacionMarker = require ('../../assets/youAreHere.png');
 import { Animated } from 'react-native';
 import DogWalkerProfile from './DogWalkerProfile'
-
+import Header from '../components/Header';
 const initialRegion={
   latitude: 37.78825,
   longitude: -122.4324,
@@ -29,19 +29,7 @@ const colors =['red','blue','green', 'yellow', 'black']
 const ubicaciones=['obeliscpo','Fiuba','Casa Rosadaa','Teatro Colon','Sanches de bustamente 666']
 
 const current_location={coords:{latitude:-34.61745 , longitude:-58.36795}};
-showMessage=()=>{
 
-  Alert.alert("Welcome to coolMaps", "this is a great place",[
-    {
-      text:'Cancel',
-      style:'cancel'
-    },
-    {
-      text:'ok'
-    
-    }
-  ])
-}
 
 function array_move(arr, old_index, new_index) {
   if (new_index >= arr.length) {
@@ -59,6 +47,7 @@ export default class  Map extends React.Component {
                 location:current_location,
                 places:[],
                 poligono:[],
+                originData:[],
                 distance:2000,
                 renderProfile:false,
                 selectedWalker:{}
@@ -74,14 +63,33 @@ export default class  Map extends React.Component {
     poligonoData=array_move(DogWalkerData,index,0);
     }else{
       poligonoData=DogWalkerData;
+      poligonoData=poligonoData.map((item, index)=>{
+        item.distance=this.calculateDistance(item.latitude, item.longitude,current_location.coords.latitude,current_location.coords.longitude)
+        return item
+      })
     }
     let newPlaces= DogWalkerData.map(item=>{
       return item.name
     })
   
    
-    this.setState({places:newPlaces, poligono:poligonoData})
+    this.setState({places:newPlaces, poligono:poligonoData , originData:poligonoData})
     
+  }
+  calculateDistance=(lat1, lon1, lat2,lon2)=>{
+    const R = 6371e3; // metres
+    const φ1 = lat1 * Math.PI/180; // φ, λ in radians
+    const φ2 = lat2 * Math.PI/180;
+    const Δφ = (lat2-lat1) * Math.PI/180;
+    const Δλ = (lon2-lon1) * Math.PI/180;
+    
+    const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+              Math.cos(φ1) * Math.cos(φ2) *
+              Math.sin(Δλ/2) * Math.sin(Δλ/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    
+    const d = R * c;
+    return Math.round(d); // in metre
   }
   
  goToDogWalkerProfile=(item)=> {
@@ -136,6 +144,11 @@ export default class  Map extends React.Component {
 
 
   }
+  changeDistance=(maxDist)=>{
+    console.log("datos: ", this.state.poligono)
+    var data=this.state.originData.filter(item=>item.distance<=maxDist)
+    this.setState({ distance:maxDist , poligono:data})
+  }
   render(){
     console.log('Renderice!!! ')
 
@@ -143,11 +156,12 @@ export default class  Map extends React.Component {
     if (!this.state.location || !this.state.places){
      return( <View/>);
      }
-    console.log('places: ',  this.state.places)
+  if(!this.state.renderProfile){
     return (
    
-       <KeyboardAwareScrollView>
-         {!this.state.renderProfile ?(
+       <KeyboardAwareScrollView style={{marginTop:40}}>
+        <Header name="DogMap" openDrawer={this.props.navigation.openDrawer}/>
+        
            <>
                   <View style={StyleSheet.containerAll}>
                     <MapView style={styles.mapStyle}  ref={map => this._map = map}
@@ -163,7 +177,7 @@ export default class  Map extends React.Component {
                 
                 <Circle center={this.state.location.coords}  radius={this.state.distance}  fillColor={'rgba(200,100,2,0.2)'} strokeColor={'red'} strokeWidth={3}></Circle>
 
-                <Marker onPress={showMessage} key={100} title ='here you are' coordinate={this.state.location.coords}
+                <Marker  key={100} title ='here you are' coordinate={this.state.location.coords}
                   pinColor='blue'
                   >
                 
@@ -209,7 +223,10 @@ export default class  Map extends React.Component {
                                 maximumValue={ maximumDistance}
                                 thumbTouchSize={{width:40, height:40}}
                                 value={this.state.distance}
-                                onValueChange={distance => this.setState({ distance })}
+                                onValueChange={distance => 
+                                //this.setState({ distance })
+                                this.changeDistance(distance)
+                                }
                                 thumbProps={{
                                             Component: Animated.Image,
                                     source:'../../assets/thumb.png'  }}
@@ -222,14 +239,18 @@ export default class  Map extends React.Component {
                               <Text >{maximumDistance} m</Text>
                           </View>
                 </View>
-           </>)
-       :
-        <DogWalkerProfile data={this.state.selectedWalker} navigation={this.props.navigation} parentScreen={"Map"}/> 
-        }
+           </>
+       
+        
+        
   </KeyboardAwareScrollView>
  
        
-  );
+  );}else{
+    return(
+      <DogWalkerProfile data={this.state.selectedWalker} navigation={this.props.navigation} parentScreen={"Map"}/> 
+    )
+  }
   }
 }
 const styles = StyleSheet.create({

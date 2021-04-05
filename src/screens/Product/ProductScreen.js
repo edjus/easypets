@@ -5,14 +5,18 @@ import {
   View,
   Image,
   Dimensions,
-  TouchableHighlight
+  TouchableHighlight,
+  TouchableOpacity
 } from 'react-native';
 import styles from './styles';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { getIngredientName, getProductCategoryName } from '../../database/MockDataAPI';
 import BackButton from '../../components/BackButton/BackButton';
 import CustomButton from '../../components/CustomButton/CustomButton';
-
+import { Marker } from 'react-native-maps';
+import Market from '../Market/Market'
+import Payment from '../Payment/PaymentScreen'
+import Header from '../../components/Header';
 const { width: viewportWidth } = Dimensions.get('window');
 
 export default class ProductScreen extends React.Component {
@@ -30,10 +34,17 @@ export default class ProductScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeSlide: 0
+      activeSlide: 0,
+      renderMarket:false,
+      renderPayment:false,
+      item:{}
     };
   }
-
+  goBack=()=> {
+     
+    this.setState({renderMarket:true})
+    
+  }
   renderImage = ({ item }) => (
     <TouchableHighlight>
       <View style={styles.imageContainer}>
@@ -42,20 +53,28 @@ export default class ProductScreen extends React.Component {
     </TouchableHighlight>
   );
 
-  onPressIngredient = item => {
-    var name = getIngredientName(item);
-    let ingredient = item;
-    this.props.navigation.navigate('Payment', { ingredient, name });
-  };
+  // onPressIngredient = item => {
+  //   var name = getIngredientName(item);
+  //   let ingredient = item;
+  //   this.setState({renderPayment:true, ingredient:ingredient, name:name})
+  //   this.props.navigation.navigate('Payment', { ingredient, name });
+  // };
+  goPayment =item=>{
+    this.setState({renderPayment:true, item:item})
+  }
 
   render() {
+    if((!this.state.renderMarket) && (!this.state.renderPayment)){
     const { activeSlide } = this.state;
     const { navigation } = this.props;
-    const item = navigation.getParam('item');
+    // const item = navigation.getParam('item');
+    const item=this.props.item;
     const category = getProductCategoryName(item.categoryId);
 
     return (
+     
       <ScrollView style={styles.container}>
+       <Header name="Market" openDrawer={this.props.navigation.openDrawer}/>
         <View style={styles.carouselContainer}>
           <View style={styles.carousel}>
             <Carousel
@@ -104,7 +123,8 @@ export default class ProductScreen extends React.Component {
             <CustomButton
               title="Buy now"
               onPress={() => {
-                navigation.navigate('Payment', { item });
+                // navigation.navigate('Payment', { item });
+                this.goPayment(item);
               }}
             />
           </View>
@@ -112,7 +132,19 @@ export default class ProductScreen extends React.Component {
             <Text style={styles.infoDescriptionRecipe}>{item.description}</Text>
           </View>
         </View>
+        <TouchableOpacity  onPress={()=>this.goBack()}>
+                <Image style={styles.roundButton3} source={require('../../../assets/back.png')}/>
+        </TouchableOpacity>
       </ScrollView>
     );
+  }else if(this.state.renderMarket){
+    return(
+    <Market navigation={this.props.navigation}/>
+    )
+  }else{
+    return(
+      <Payment  item={this.state.item} navigation={this.props.navigation}/>
+    )
+  }
   }
 }

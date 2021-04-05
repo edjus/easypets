@@ -140,7 +140,7 @@ export default class EventScreen extends React.Component {
   }else if(!this.state.renderBooking){
     return(<EventList category={this.props.category} title={this.props.title} navigation={this.props.navigation}/>)
   }else{
-    return(<Boocking  item={this.state.item} navigation={this.props.navigation}/>)
+    return(<Boocking  item={this.state.item}   category={this.props.category} navigation={this.props.navigation}/>)
   }
 }
 }

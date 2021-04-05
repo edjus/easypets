@@ -5,7 +5,7 @@ import { Rating, AirbnbRating } from 'react-native-ratings';
 import DogWalkerProfile from './DogWalkerProfile'
 import {DogWalkerData} from './DogWalkerData'
 
-
+import Header from '../components/Header';
 function Item ({item, callBack}){
   
     return (
@@ -45,19 +45,28 @@ export default class DogWalkers extends React.Component {
     //this.props.navigation.navigate('DogWalker',{data:item});
   }
   render(){
+    if(!this.state.renderProfile){
     return (
+      
       <View style={styles.container}>
-      {!this.state.renderProfile ?
+       <Header name="DogWalkers" openDrawer={this.props.navigation.openDrawer}/>
+ 
         <FlatList
           style={{flex:1}}
           data={this.state.data}
           renderItem={({ item}) => <Item item={item} callBack={this.goToDogWalkerProfile}/>}
           keyExtractor={item => item.email}
-        />:
-        <DogWalkerProfile data={this.state.selectedWalker} navigation={this.props.navigation} parentScreen={"DogWalkers"}/> 
-        }
+        />
+        
+        
       </View>
     );
+      }else{
+        return(
+          <DogWalkerProfile data={this.state.selectedWalker} navigation={this.props.navigation} parentScreen={"DogWalkers"}/> 
+
+        )
+      }
   }
 }
 
