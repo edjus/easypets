@@ -13,6 +13,7 @@ import Slider from '@react-native-community/slider';
 var UbicacionMarker = require ('../../assets/youAreHere.png');
 import { Animated } from 'react-native';
 import DogWalkerProfile from './DogWalkerProfile'
+import SpotHiredDogWalker from './SpotHiredDogWalkers'
 import Header from '../components/Header';
 const initialRegion={
   latitude: 37.78825,
@@ -145,12 +146,12 @@ export default class  Map extends React.Component {
 
   }
   changeDistance=(maxDist)=>{
-    console.log("datos: ", this.state.poligono)
+  
     var data=this.state.originData.filter(item=>item.distance<=maxDist)
     this.setState({ distance:maxDist , poligono:data})
   }
   render(){
-    console.log('Renderice!!! ')
+
 
     // si no se pudo encontrar la ubicacion 
     if (!this.state.location || !this.state.places){
@@ -248,7 +249,7 @@ export default class  Map extends React.Component {
        
   );}else{
     return(
-      <DogWalkerProfile data={this.state.selectedWalker} navigation={this.props.navigation} parentScreen={"Map"}/> 
+      <SpotHiredDogWalker data={this.state.selectedWalker} navigation={this.props.navigation} parentScreen={"Map"}/> 
     )
   }
   }

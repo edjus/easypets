@@ -1,59 +1,62 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements'
+import { getPets } from '../services/PetsService';
 import Header from '../components/Header';
+import Task from './Task'
 
-const mascotas = [
-  {
-    nombre: 'Pipo',
-    foto: 'https://t2.ea.ltmcdn.com/es/images/6/9/3/enfermedades_mas_comunes_en_perros_caniches_23396_600_square.jpg',
-    raza: 'Caniche',
-    fechaNacimiento: "12-12-2015"
-  },
-  {
-    nombre: 'Rocky',
-    foto: 'https://t2.ea.ltmcdn.com/es/razas/5/5/0/img_55_golden-retriever-o-cobrador-dorado_0_600.jpg',
-    raza: 'Golde Retriver',
-    fechaNacimiento: "20-06-2017"
-  },
-  {
-    nombre: 'Manchas',
-    foto: 'https://www.hola.com/imagenes/estar-bien/20200828174216/razas-perro-dalmata-gt/0-859-148/dalmata-t.jpg',
-    raza: 'Dalmata',
-    fechaNacimiento: "05-01-2021"
-  },
-]
+export default function Mascotas ({navigation}) {
 
-export default function Mascotas (props) {
+  const [mascotas, setMascotas] = useState([]);
+  const [renderTask, setRenderTask] = useState(false);
 
-  const enlazar = (perro) => {
-    return Alert.alert(`Llamar a detalle con -perro- ${perro.nombre}`);
+  useEffect(() => {
+      const pets = getPets();
+      setMascotas(pets);
+  }, [])
+
+  const enlazar = (dog) => {
+    navigation.navigate("Profile", {dog})
   };
 
-  return (
-    <View>
-    
-    <View style={{marginTop:40}}>
-    <Header name="MyPets" openDrawer={props.navigation.openDrawer}/>
-      <Text style={styles.logo}> Mis Mascotas</Text>
-      {
-        mascotas.map((perro, i) => (
-          <ListItem key={i} bottomDivider onPress={() => enlazar(perro)}>
-            <Avatar source={{uri: perro.foto}} />
-            <ListItem.Content>
-              <ListItem.Title>{perro.nombre}</ListItem.Title>
-              <ListItem.Subtitle>{perro.raza}</ListItem.Subtitle>
-            </ListItem.Content>
-            <ListItem.Chevron />
-          </ListItem>
-        ))
-      }
-      <TouchableOpacity style={styles.loginBtn}>
-              <Text style={styles.loginText}>Agregar</Text>
-      </TouchableOpacity>
-    </View>
-    </View>
+  const onAddPet = () => {
+    setRenderTask(true);
+    navigation.navigate("Task");
+  }
+
+  if(!renderTask){
+    return (
+  
+      <View>
+          <View style={{marginTop:40}}>
+      <Header name="MyPets" openDrawer={navigation.openDrawer}/>
+      </View>
+      <View>
+        <Text style={styles.logo}> My Pets</Text>
+        {
+          mascotas.map((dog, i) => (
+            <ListItem key={i} bottomDivider onPress={() => enlazar(dog)}>
+              <Avatar source={{uri: dog.imageUri}} />
+              <ListItem.Content>
+                <ListItem.Title>{dog.name}</ListItem.Title>
+                <ListItem.Subtitle>{dog.breed}</ListItem.Subtitle>
+              </ListItem.Content>
+              <ListItem.Chevron />
+            </ListItem>
+          ))
+        }
+        <TouchableOpacity style={styles.loginBtn} onPress={onAddPet}>
+          <Text style={styles.loginText}>Agregar</Text>
+        </TouchableOpacity>
+      </View>
+      </View>
   );  
+  }else{
+    return(
+      <Task navigation={navigation}/>
+    )
+  }
+
 }
 
 const styles = StyleSheet.create({

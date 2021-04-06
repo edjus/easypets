@@ -244,7 +244,7 @@ export default class Calendar  extends React.Component{
             )
         }else{
             return(
-                <HiredDogWalkers dogWalkerProfile={this.state.selectedWalker} reservedDays={this.state.reservedDays}/>
+                <HiredDogWalkers dogWalkerProfile={this.state.selectedWalker} navigation={this.state.navigation} reservedDays={this.state.reservedDays}/>
             )
         }
 

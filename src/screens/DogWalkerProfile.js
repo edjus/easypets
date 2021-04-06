@@ -102,7 +102,7 @@ export default class DogWalkerProfile  extends React.Component{
         )
       }else if (this.state.calendar){
         return(
-          <Calendar name={this.state.profileData.name}  selectedWalker={this.state.profileData} calendario={this.state.profileData.calendario}/>
+          <Calendar name={this.state.profileData.name}  navigation={this.props.navigation} selectedWalker={this.state.profileData} calendario={this.state.profileData.calendario}/>
         )
       }else{
         return(

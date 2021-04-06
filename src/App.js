@@ -123,7 +123,7 @@ const Drawer = createDrawerNavigator(
     Market:{ screen: Market},
     Events:{ screen:Events},
     Profile:{screen: Profile},
-    MyPets:{screen:Mascotas},
+    MyPets:{screen: Mascotas},
     DogWalkers:{screen:DogWalkers},
     DogMap:{screen:DogMap}
 
@@ -192,7 +192,6 @@ const styles = StyleSheet.create({
     height:80,
     borderRadius:40,
     marginTop:5,
-    color:'red'
   },
   sidebarDivider:{
     height:1,

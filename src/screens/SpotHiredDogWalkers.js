@@ -4,10 +4,10 @@ import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from 'react
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import DogWalkerProfile from './DogWalkerProfile'
 import {DogWalkerData} from './DogWalkerData'
+import Map from './Map'
 
 
 function Item ({item, dias ,callBack}){
-  console.log("dias recibidos: ",dias)
     return (
       <View style={styles.listItem}>
         <Image source={{uri:item.photo}}  style={{width:60, height:60,borderRadius:30}} />
@@ -15,17 +15,10 @@ function Item ({item, dias ,callBack}){
           <Text style={{fontWeight:"bold"}}>{item.name}</Text>
           <Text>{item.distance + " km" + "  " + item.price + " /hr"} </Text>
           <AirbnbRating defaultRating={item.rating} size={20}/>
-          <Text style={{fontWeight:"bold" ,marginRight:10}}>Schedule</Text>
-          {dias.map((value, index)=>{
-            if(value.horas.length!=0){
-          
-              return(
-                  <View style={{alignItems:"center",flex:1,flexDirection:"row"}}>
-                      <Text style={{fontWeight:"bold" ,marginRight:10}}>{value.name}</Text>
-                      <Text style={{fontWeight:"bold"}}>{value.horas}</Text>
-                  </View>)
-              }
-            })}
+          <View style={{alignItems:"center",flex:1,flexDirection:"row"}}>
+                      <Text style={{fontWeight:"bold" ,marginRight:10}}>Day and hour: </Text>
+                      <Text style={{fontWeight:"bold"}}>{dias}</Text>
+            </View>
         </View>
         <TouchableOpacity style={{height:50,width:50, justifyContent:"center",alignItems:"center"}} onPress={()=>callBack(item)}>
           <Text style={{color:"green"}} >Cancel Hire</Text>
@@ -39,37 +32,50 @@ export default class DogWalkers extends React.Component {
  
     state = {
         data:[], 
-        reservedDays:this.props.reservedDays,
+        reservedDays:'',
         renderProfile:false,
-        selectedWalker:{}
+        selectedWalker:{},
+        renderMap:false
       }
  
   componentDidMount(){
-
-    hiredDogWalkers.push(this.props.dogWalkerProfile)
-      this.setState({data:hiredDogWalkers , reservedDays:this.props.reservedDays})
+    hiredDogWalkers=[]
+    hiredDogWalkers.push(this.props.data)
   
+      let date= new Date();
+      date.setHours(date.getHours() +  Math.round(date.getMinutes()/60));
+      date.setMinutes(0, 0, 0); // Resets also seconds and milliseconds
+      var stringDate=date.toString().split('G')[0]
+      this.setState({data:hiredDogWalkers , reservedDays:stringDate})
+  
+ 
   }
 
   goBack=(item)=> {
      
-  
-    this.setState({selectedWalker:item, renderProfile:true})
-    //this.props.navigation.navigate('DogWalker',{data:item});
+   
+ 
+    this.setState({ renderMap:true})
+    
+  }
+  cancelHire=(item)=>{
+    let  newData=this.state.data.filter((value)=>{value.email!=item.email})
+    
+    this.setState({data:newData})
   }
   render(){
-    if ((!this.state.renderProfile)){
+    if ((!this.state.renderMap)){
             
       
     return (
       <View style={styles.container}>
-      <Text style={{fontWeight:"bold", fontSize:20, textAlign:'center', color:'red'}}>Hired Dog walkers</Text>
+      <Text style={{fontWeight:"bold", fontSize:20, textAlign:'center', color:'red'}}>Spot Hired Dog walkers</Text>
       
       {!this.state.renderProfile ?
         <FlatList
           style={{flex:1}}
           data={this.state.data}
-          renderItem={({ item}) => <Item item={item}  dias={this.state.reservedDays} callBack={this.goToDogWalkerProfile}/>}
+          renderItem={({ item}) => <Item item={item}  dias={this.state.reservedDays} callBack={this.cancelHire}/>}
           keyExtractor={item => item.email}
         />:
         <DogWalkerProfile data={this.state.selectedWalker} navigation={this.props.navigation} parentScreen={"DogWalkers"}/> 
@@ -83,7 +89,7 @@ export default class DogWalkers extends React.Component {
   }else{
 
     return(
-        <DogWalkerProfile data={this.props.dogWalkerProfile} navigation={this.props.navigation} parentScreen={"DogWalkers"}/> 
+        <Map navigation={this.props.navigation}/> 
     )
   }
 }
