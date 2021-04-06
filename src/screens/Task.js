@@ -1,25 +1,22 @@
 import React from 'react';
-import{StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
+import{StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 //import defaultImage from '../assets/images/defaultImage.png';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 const defaultImage='../assets/icon.png'
 import Header from '../components/Header';
+import { addPet } from '../services/PetsService';
 export default class Task extends React.Component{
 
     state={
         name:"",
-        description:"",
-        owner:"",
-        priority:"",
-        responsible:"",
-        area:"",
-        coordinates:[],
-        image:null,
-        filePath: "",
+        breed:"",
+        weight:"",
+        sex:"",
+        birthday: "",
         fileData: null,
-        fileUri:null,
+        fileUri:'https://www.hola.com/imagenes/estar-bien/20200828174216/razas-perro-dalmata-gt/0-859-148/dalmata-t.jpg', // valor por defecto
     }
 
     componentDidMount(){
@@ -94,79 +91,69 @@ export default class Task extends React.Component{
     addTask=()=> {
 
         const dataToSave={
-                taskName:this.state.name,
-                description:this.state.description,
-                owner:this.state.owner,
-                priority:this.state.priority,
-                responsible:this.state.responsible,
-                area:this.state.area,
-                coordinates:this.state.coordinates,
+                name:this.state.name,
+                breed:this.state.breed,
+                weight:this.state.weight,
+                sex:this.state.sex,
+                birthday:this.state.birthday,
+                vaccines: [],
+                treatment: null,
                 imageData: this.state.fileData,
                 imageUri:this.state.fileUri,
 
         }
         console.log("data to save ", dataToSave)
+        addPet(dataToSave);
+        this.props.navigation.navigate("Mascotas");
     }
     render(){
         return(
-            <View style={styles.container}>
-                  <Header name="Task" openDrawer={this.props.navigation.openDrawer}/>
-                <Text style={styles.logo}>EasyPet</Text>
+            <ScrollView>
+              <View style={styles.container}>
+                  <Header name="New Dog" openDrawer={this.props.navigation.openDrawer}/>
+                <Text style={styles.logo}>New Dog</Text>
                 <View style={styles.inputView}>
-                <TextInput
-                    style={styles.inputText}
-                   placeholder={"task title..."}
-                    placeholderTextColor="white"
-                    onChangeText={text=>this.setState({name:text})}
-                />
+                  <TextInput
+                      style={styles.inputText}
+                      placeholder={"Name..."}
+                      placeholderTextColor="white"
+                      onChangeText={text=>this.setState({name:text})}
+                  />
                 </View>
                 <View style={styles.inputView}>
-                <TextInput
-                    style={styles.inputText}
-                   placeholder={"Description..."}
-                    placeholderTextColor="white"
-                    onChangeText={text=>this.setState({description:text})}
-                />
+                  <TextInput
+                      style={styles.inputText}
+                      placeholder={"Breed..."}
+                      placeholderTextColor="white"
+                      onChangeText={text=>this.setState({breed:text})}
+                  />
                  </View>
                  <View style={styles.inputView} >
-    
-
-                <Text  style={styles.pickerText}>What&rsquo;s the priority?</Text>
-                <Picker
-                      selectedValue={this.state.priority}
-                      style={styles.inputText}
-                      onValueChange={(itemValue, itemIndex) =>
-                        this.setState({priority: itemValue})
-                      }>
-                      <Picker.Item label="LOW" value="LOW" />
-                      <Picker.Item label="MEDIUM" value="MEDIUM" />
-                      <Picker.Item label="HIGH" value="HIGH" />
-                      <Picker.Item label="URGENT" value="URGENT" />
-                        </Picker>
+                  <Picker
+                    selectedValue={this.state.sex}
+                    style={styles.inputText}
+                    onValueChange={(itemValue, itemIndex) =>
+                    this.setState({sex: itemValue})
+                  }>
+                      <Picker.Item label="MALE" value="MALE" />
+                      <Picker.Item label="FEMALE" value="FEMALE" />
+                  </Picker>
                 </View>
 
                 <View style={styles.inputView}>
                 <TextInput
                     style={styles.inputText}
-                   placeholder={"Owner..."}
+                   placeholder={"Weight...(kg)"}
                     placeholderTextColor="white"
-                    onChangeText={text=>this.setState({owner:text})}
+                    onChangeText={text=>this.setState({weight:text})}
                 />
                  </View>
                 <View style={styles.inputView}>
                 <TextInput
                     style={styles.inputText}
-                   placeholder={"Resposible..."}
+                   placeholder={"Birthday...(dd/mm/yyyy)"}
                     placeholderTextColor="white"
-                    onChangeText={text=>this.setState({responsible:text})}
-                />
-                 </View>
-                <View style={styles.inputView}>
-                <TextInput
-                    style={styles.inputText}
-                   placeholder={"Area..."}
-                    placeholderTextColor="white"
-                    onChangeText={text=>this.setState({area:text})}
+                    onChangeText={text=>this.setState({birthday:text})}
                 />
                  </View>
                  <View style={{ flex: 1, alignItems:'center',justifyContent:'center' }}>
@@ -178,21 +165,12 @@ export default class Task extends React.Component{
                 </View>
             
                 <TouchableOpacity onPress={this.addTask} style={styles.loginBtn}>
-                    <Text style={styles.loginText}>Add Task</Text>
+                    <Text style={styles.loginText}>Add Dog</Text>
                 </TouchableOpacity>
-                
-
-
-            </View>
-
-
+              </View>
+            </ScrollView>
         )
-
     }
-
-
-
-
 }
 
 const styles = StyleSheet.create({
@@ -211,8 +189,8 @@ const styles = StyleSheet.create({
     },
     inputView:{
       width:"80%",
-      backgroundColor:"#465881",
-      borderRadius:25,
+      backgroundColor:"#6c89f5",
+      borderRadius:10,
       height:50,
       marginBottom:20,
       justifyContent:"center",

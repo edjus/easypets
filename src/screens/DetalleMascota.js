@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Modal, Pressable } from 'react-native';
+import {StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Modal, Pressable, ScrollView } from 'react-native';
 import { Card, Icon } from 'react-native-elements'
 import Header from '../components/Header';
 
@@ -10,8 +10,10 @@ const pluto = {
   raza: "Golden Retriver"
 }
 
-export default function DetalleMascota ({navigation,mascota = pluto}) {
+export default function DetalleMascota ({navigation}) {
 
+  const mascota = navigation.getParam('dog', pluto);
+  console.log(mascota);
   const [tratamiento, setTratamiento] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -31,73 +33,75 @@ export default function DetalleMascota ({navigation,mascota = pluto}) {
   const icono = tratamiento ? "pencil" : "plus-circle";
 
   return (
-    <View  style={styles.container}>
-      <Header name="Profile" openDrawer={navigation.openDrawer}/>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>
-            Ingrese una descripción del tratamiento:
-            </Text>
-            <TextInput
-              style={styles.inputText}
-              value={tratamiento}
-              onChangeText={texto=>setTratamiento(texto)}
-            />
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.textStyle}>Aceptar</Text>
-            </Pressable>
+    <ScrollView style={styles.container}>
+        <Header name="Profile" openDrawer={navigation.openDrawer}/>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>
+              Ingrese una descripción del tratamiento:
+              </Text>
+              <TextInput
+                style={styles.inputText}
+                value={tratamiento}
+                onChangeText={texto=>setTratamiento(texto)}
+              />
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.textStyle}>Aceptar</Text>
+              </Pressable>
+            </View>
           </View>
-        </View>
-      </Modal>
-      <Card>
-        <Card.Title>
-          <Text style={styles.logo}> {`${mascota.nombre}`}</Text>
-        </Card.Title>
-        <Card.Divider />
-        <Card.Image source={{ uri: mascota.foto }} />
-        <View>
-          <Text>Fecha de Nacimiento:</Text> 
-          <Text>{mascota.fechaNacimiento}</Text>
+        </Modal>
+        <Card>
+          <Card.Title>
+            <Text style={styles.logo}> {`${mascota.name}`}</Text>
+          </Card.Title>
+          <Card.Divider />
+          <Card.Image source={{ uri: mascota.imageUri }} />
+          <View>
+            <Text>Birthday:</Text> 
+            <Text>{mascota.birthday}</Text>
 
-          <Text>Raza:</Text> 
-          <Text>{mascota.raza}</Text>
-        </View>
-      <TouchableOpacity style={styles.loginBtn} onPress={()=>Alert.alert("No tiene vacunas pendientes")}>
-        <Text style={styles.loginText}>
-          <Icon name='medkit' type='font-awesome' color='#fff' /> Vacunas
-        </Text>
-      </TouchableOpacity>
-      <View>
-        <TouchableOpacity style={styles.loginBtn} onPress={()=>mostrarTratamiento()}>
+            <Text>Breed:</Text> 
+            <Text>{mascota.breed}</Text>
+            <Text>Sex:</Text> 
+            <Text>{mascota.sex}</Text>
+            <Text>weight:</Text> 
+            <Text>{mascota.weight} kg</Text>
+          </View>
+        <TouchableOpacity style={styles.loginBtn} onPress={()=>Alert.alert("No tiene vacunas pendientes")}>
           <Text style={styles.loginText}>
-            <Icon name='heartbeat' type='font-awesome' color='#fff' /> Tratamiento
+            <Icon name='medkit' type='font-awesome' color='#fff' /> Vacunas
           </Text>
         </TouchableOpacity>
-        <Icon name={icono} type='font-awesome' color='#000' onPress={()=>setModalVisible(true)} />
-        {tratamiento && <Icon name="trash" type='font-awesome' color='#000' onPress={()=>setTratamiento(null)} />}
-      </View>
-      </Card>
-    </View>
+        <View>
+          <TouchableOpacity style={styles.loginBtn} onPress={()=>mostrarTratamiento()}>
+            <Text style={styles.loginText}>
+              <Icon name='heartbeat' type='font-awesome' color='#fff' /> Tratamiento
+            </Text>
+          </TouchableOpacity>
+          <Icon name={icono} type='font-awesome' color='#000' onPress={()=>setModalVisible(true)} />
+          {tratamiento && <Icon name="trash" type='font-awesome' color='#000' onPress={()=>setTratamiento(null)} />}
+        </View>
+        </Card>
+    </ScrollView>
   );  
 }
 
 const styles = StyleSheet.create({
     container: {
       backgroundColor: "#fff",
-      paddingTop:40,
-      alignItems:"center",
       flex:1
   
     },
