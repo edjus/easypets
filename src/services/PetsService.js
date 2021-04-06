@@ -8,7 +8,7 @@ let pets = [
     birthday: "12-12-2015",
     sex: 'MALE',
     vaccines: [],
-    treatment: 'Dont have a treatment'
+    treatment: null,
   },
 ];
 
@@ -20,7 +20,17 @@ const addPet = (pet) => {
   const id = pets.length + 1;
   const newPet = {...pet, id}
   pets.push(newPet);
-  console.log(pets);
 }
 
-export { getPets, addPet }
+const addTreatmentToPet = (id, treatment) => {
+  let pet = pets.find(p => p.id === id);
+  pet.treatment = treatment;
+}
+
+const addNewVaccioneToPet = (id, vaccine) => {
+  if (!vaccine) return;
+  let pet = pets.find(p => p.id === id);
+  pet.vaccines.push(vaccine);
+}
+
+export { getPets, addPet, addTreatmentToPet, addNewVaccioneToPet }

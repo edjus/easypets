@@ -41,14 +41,14 @@ export default class BookingScreen extends React.Component {
       place: [
         {
           id: 1,
-          label: 'Garden',
+          label: 'Outdoor',
           size: 20,
           color: "#00cc99",
           selected:true,
         },
         {
           id: 2,
-          label: 'Hall',
+          label: 'Indoor',
           size: 20,
           color: "#00cc99",
         },

@@ -2,35 +2,53 @@ import React, { useState } from 'react';
 import {StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Modal, Pressable, ScrollView } from 'react-native';
 import { Card, Icon } from 'react-native-elements'
 import Header from '../components/Header';
+import { addNewVaccioneToPet, addTreatmentToPet } from '../services/PetsService';
+import { Input } from 'react-native-elements';
 
-const pluto = {
-  nombre: "Pluto",
-  foto: "https://t2.ea.ltmcdn.com/es/razas/5/5/0/img_55_golden-retriever-o-cobrador-dorado_0_600.jpg",
-  fechaNacimiento: "12-12-2010",
-  raza: "Golden Retriver"
-}
 
 export default function DetalleMascota ({navigation}) {
 
-  const mascota = navigation.getParam('dog', pluto);
-  console.log(mascota);
-  const [tratamiento, setTratamiento] = useState(null);
+  const mascota = navigation.getParam('dog');
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalVaccinesVisible, setModalVaccinesVisible] = useState(false);
+  const [newVaccine, setNewVaccine] = useState(null);
+  const [changed, setChanged] = useState(false);
+
+  const setTratamiento = (text) => {
+    addTreatmentToPet(mascota.id, text);
+    setChanged(!changed);
+  }
 
   const mostrarTratamiento = () => {
     let detalleTratamiento = "";
-
-    if (tratamiento) {
-      detalleTratamiento = `${mascota.nombre} debe: ${tratamiento}`;
+    if (mascota.treatment) {
+      detalleTratamiento = `${mascota.name} should: ${mascota.treatment}`;
     }
     else {
-      detalleTratamiento = `${mascota.nombre} no tiene ningún tratamiento`;
+      detalleTratamiento = `${mascota.name} does not have a treatment`;
     }
 
     return Alert.alert(detalleTratamiento);
   };
 
-  const icono = tratamiento ? "pencil" : "plus-circle";
+  const confirmNewVaccine = () => {
+    setModalVaccinesVisible(!modalVaccinesVisible);
+    addNewVaccioneToPet(mascota.id, newVaccine);
+    setNewVaccine(null);
+    setChanged(!changed);
+  }
+
+  const mostrarVaccines = () => {
+    let detalle = "";
+    if (mascota.vaccines.length > 0) {
+      detalle = mascota.vaccines.reduce((acc, value) => `${acc} - ${value}\n`, "\n");
+    }
+    else {
+      detalle = "No vaccines register"
+    }
+
+    Alert.alert(detalle);
+  }
 
   return (
     <ScrollView style={styles.container}>
@@ -47,18 +65,47 @@ export default function DetalleMascota ({navigation}) {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <Text style={styles.modalText}>
-              Ingrese una descripción del tratamiento:
+              Enter a treatment:
               </Text>
               <TextInput
                 style={styles.inputText}
-                value={tratamiento}
+                value={mascota.treatment}
                 onChangeText={texto=>setTratamiento(texto)}
               />
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setModalVisible(!modalVisible)}
               >
-                <Text style={styles.textStyle}>Aceptar</Text>
+                <Text style={styles.textStyle}>Confirm</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVaccinesVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVaccinesVisible(!modalVaccinesVisible);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>
+              Add vaccines:
+              </Text>
+              <TextInput
+                style={styles.inputText}
+                value={newVaccine}
+                onChangeText={texto=>setNewVaccine(texto)}
+              />
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => confirmNewVaccine()}
+              >
+                <Text style={styles.textStyle}>Confirm</Text>
               </Pressable>
             </View>
           </View>
@@ -69,31 +116,47 @@ export default function DetalleMascota ({navigation}) {
           </Card.Title>
           <Card.Divider />
           <Card.Image source={{ uri: mascota.imageUri }} />
-          <View>
-            <Text>Birthday:</Text> 
-            <Text>{mascota.birthday}</Text>
-
-            <Text>Breed:</Text> 
-            <Text>{mascota.breed}</Text>
-            <Text>Sex:</Text> 
-            <Text>{mascota.sex}</Text>
-            <Text>weight:</Text> 
-            <Text>{mascota.weight} kg</Text>
+            <View style={styles.rowContainer}>
+              <Text style={styles.infoRecipe}>Birthday:</Text> 
+              <Text style={styles.infoDescriptionRecipe}>{mascota.birthday}</Text>
+            </View>
+            <View style={styles.rowContainer}>
+              <Text style={styles.infoRecipe} >Breed:</Text> 
+              <Text style={styles.infoDescriptionRecipe}>{mascota.breed}</Text>
+            </View>
+            <View style={styles.rowContainer}>
+              <Text style={styles.infoRecipe} >Sex:</Text> 
+              <Text style={styles.infoDescriptionRecipe}>{mascota.sex}</Text>
+            </View>
+            <View style={styles.rowContainer}>
+              <Text style={styles.infoRecipe} >Weight:</Text> 
+              <Text style={styles.infoDescriptionRecipe}>{mascota.weight} kg</Text>
+            </View>
+          <View style={styles.rowContainer}>
+            <TouchableOpacity style={styles.loginBtn} onPress={()=>mostrarVaccines()}>
+              <Text style={styles.loginText}>
+                <Icon name='medkit' type='font-awesome' color='#fff' /> Vaccines
+              </Text>
+            </TouchableOpacity>
+            <View style={styles.icon}>
+              <Icon name="plus-circle" type='font-awesome' color='#52c76f' onPress={()=>setModalVaccinesVisible(true)} size={30} />
+            </View>
           </View>
-        <TouchableOpacity style={styles.loginBtn} onPress={()=>Alert.alert("No tiene vacunas pendientes")}>
-          <Text style={styles.loginText}>
-            <Icon name='medkit' type='font-awesome' color='#fff' /> Vacunas
-          </Text>
-        </TouchableOpacity>
-        <View>
-          <TouchableOpacity style={styles.loginBtn} onPress={()=>mostrarTratamiento()}>
-            <Text style={styles.loginText}>
-              <Icon name='heartbeat' type='font-awesome' color='#fff' /> Tratamiento
-            </Text>
-          </TouchableOpacity>
-          <Icon name={icono} type='font-awesome' color='#000' onPress={()=>setModalVisible(true)} />
-          {tratamiento && <Icon name="trash" type='font-awesome' color='#000' onPress={()=>setTratamiento(null)} />}
-        </View>
+          <View style={styles.rowContainer}>
+            <TouchableOpacity style={styles.loginBtn} onPress={()=>mostrarTratamiento()}>
+              <Text style={styles.loginText}>
+                <Icon name='heartbeat' type='font-awesome' color='#fff' /> Treatment
+              </Text>
+            </TouchableOpacity>
+            <View style={styles.icon}>
+              {
+                mascota.treatment ? 
+                (<Icon name="trash" type='font-awesome' color='#52c76f' onPress={()=>setTratamiento(null)} />)
+              :
+                (<Icon name="plus-circle" type='font-awesome' color='#52c76f' onPress={()=>setModalVisible(true)} size={30} />)
+              }
+            </View>
+          </View>
         </Card>
     </ScrollView>
   );  
@@ -103,13 +166,12 @@ const styles = StyleSheet.create({
     container: {
       backgroundColor: "#fff",
       flex:1
-  
     },
     logo:{
       fontWeight:"bold",
-      fontSize:50,
+      fontSize:40,
       color:"#fb5b5a",
-      marginBottom:40
+      marginBottom: 20
     },
     inputView:{
       width:"80%",
@@ -121,8 +183,6 @@ const styles = StyleSheet.create({
       padding:20
     },
     inputText:{
-      height:50,
-      width: "80%",
       borderWidth: 1,
     },
     forgot:{
@@ -130,18 +190,17 @@ const styles = StyleSheet.create({
       fontSize:11
     },
     loginBtn:{
-      width:"80%",
-      backgroundColor:"#fb5b5a",
+      width:"60%",
+      backgroundColor:"#8fd1f7",
       borderRadius:10,
       height:45,
       alignItems:"center",
       justifyContent:"center",
-      marginTop:20,
       elevation: 2
     },
     loginText:{
       color:"white",
-      fontSize: 30
+      fontSize: 20
     },
     centeredView: {
       flex: 1,
@@ -150,11 +209,10 @@ const styles = StyleSheet.create({
       marginTop: 22
     },
     modalView: {
-      margin: 20,
+      margin: 10,
       backgroundColor: "white",
       borderRadius: 20,
       padding: 35,
-      alignItems: "center",
       shadowColor: "#000",
       shadowOffset: {
         width: 0,
@@ -175,6 +233,25 @@ const styles = StyleSheet.create({
       elevation: 2
     },
     buttonClose: {
-      backgroundColor: "#2196F3",
+      backgroundColor: "#68f7ab",
+      alignItems: 'center',
+      width: '80%',
+      marginLeft: 160
+    },
+    infoRecipe: {
+      fontSize: 14,
+      fontWeight: 'bold',
+      marginLeft: 5,
+    },
+    rowContainer: {
+      flexDirection: 'row',
+      paddingTop: 5,
+    },
+    infoDescriptionRecipe: {
+      fontSize: 16,
+      paddingLeft: 10,
+    },
+    icon: {
+      padding: 10,
     },
   });
