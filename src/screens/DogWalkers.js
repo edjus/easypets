@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F7F7F7',
-    marginTop:60
+    marginTop:20
   },
   listItem:{
     margin:10,

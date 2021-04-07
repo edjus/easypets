@@ -21,7 +21,11 @@ let pets = [
     const newPet = {...pet, id}
     pets.push(newPet);
   }
-  
+  const deletePet = (currentPet) => {
+    const newPets= pets.filter(pet=>pet.id!=currentPet.id)
+    
+    pets=newPets;
+  }
   const addTreatmentToPet = (id, treatment) => {
     let pet = pets.find(p => p.id === id);
     pet.treatment = treatment;
@@ -33,4 +37,4 @@ let pets = [
     pet.vaccines.push(vaccine);
   }
   
-  export { getPets, addPet, addTreatmentToPet, addNewVaccioneToPet }
+  export { getPets, addPet, deletePet, addTreatmentToPet, addNewVaccioneToPet }

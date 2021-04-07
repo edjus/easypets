@@ -67,29 +67,14 @@ export default class Task extends React.Component{
       })
       .catch(error => console.log({ error }));
       console.log(image);
-      // ImagePicker.launchCamera(options, (res) => {
-      //   console.log('Response = ', res);
-  
-      //   if (res.didCancel) {
-      //     console.log('User cancelled image picker');
-      //   } else if (res.error) {
-      //     console.log('ImagePicker Error: ', res.error);
-      //   } else if (res.customButton) {
-      //     console.log('User tapped custom button: ', res.customButton);
-      //     alert(res.customButton);
-      //   } else {
-      //     const source = { uri: res.uri };
-      //     console.log('response', JSON.stringify(res));
-      //     this.setState({
-      //       filePath: res,
-      //       fileData: res.data,
-      //       fileUri: res.uri
-      //     });
-      //   }
-      // });
+
   }
 
+  goBack=(item)=> {
+     
+    this.setState({renderMyPets:true})
 
+  }
     addTask=()=> {
 
         const dataToSave={
@@ -115,7 +100,7 @@ export default class Task extends React.Component{
             <ScrollView>
               <View style={styles.container}>
                   <Header name="New Dog" openDrawer={this.props.navigation.openDrawer}/>
-                <Text style={styles.logo}>New Dog</Text>
+                <Text style={styles.logo}>Add pet</Text>
                 <View style={styles.inputView}>
                   <TextInput
                       style={styles.inputText}
@@ -167,11 +152,20 @@ export default class Task extends React.Component{
                   />
                   </TouchableOpacity>
                 </View>
-            
-                <TouchableOpacity onPress={this.addTask} style={styles.loginBtn}>
-                    <Text style={styles.loginText}>Add Dog</Text>
+                </View>
+                  <View style={{  flexDirection:"row", alignItems:'center'}}>
+               
+             
+
+              <TouchableOpacity  onPress={()=>this.goBack()}>
+                    <Image style={styles.roundButton3} source={require('../../assets/back.png')}/>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={this.addTask}  >
+                     <Image style={styles.roundButton3} source={require('../../assets/plus.png')}/>
                 </TouchableOpacity>
               </View>
+             
+   
             </ScrollView>
         )
       }else{
@@ -185,21 +179,21 @@ export default class Task extends React.Component{
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
-    paddingTop:40,
+    paddingTop:20,
     alignItems:"center",
     flex:1
 
   },
     logo:{
       fontWeight:"bold",
-      fontSize:50,
+      fontSize:30,
       color:"#fb5b5a",
-      marginBottom:40
+      marginBottom:10
     },
     inputView:{
       width:"80%",
-      backgroundColor:"#6c89f5",
-      borderRadius:10,
+      backgroundColor:"#4334eb",
+      borderRadius:30,
       height:50,
       marginBottom:20,
       justifyContent:"center",
@@ -225,6 +219,31 @@ const styles = StyleSheet.create({
       justifyContent:"center",
       marginTop:40,
       marginBottom:10
+    },
+    roundButton2: {
+ 
+      width: 150,
+      height: 150,
+      justifyContent: 'center',
+      alignSelf: 'center',
+      padding: 20,
+      marginBottom:50,
+      borderRadius: 100,
+    
+      resizeMode: 'contain'
+    },
+    roundButton3: {
+      width: 100,
+      height: 100,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 0,
+      marginTop:5,
+      marginBottom:20,
+      alignSelf:'center',
+      borderRadius: 100,
+      marginLeft:40,
+      backgroundColor: 'blue',
     },
     loginText:{
       color:"white"

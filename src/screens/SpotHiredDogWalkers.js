@@ -13,7 +13,7 @@ function Item ({item, dias ,callBack}){
         <Image source={{uri:item.photo}}  style={{width:60, height:60,borderRadius:30}} />
         <View style={{alignItems:"center",flex:1}}>
           <Text style={{fontWeight:"bold"}}>{item.name}</Text>
-          <Text>{item.distance + " km" + "  " + item.price + " /hr"} </Text>
+          <Text>{item.distance + "m" + "  " + item.price + " $/hr"} </Text>
           <AirbnbRating defaultRating={item.rating} size={20}/>
           <View style={{alignItems:"center",flex:1,flexDirection:"row"}}>
                       <Text style={{fontWeight:"bold" ,marginRight:10}}>Day and hour: </Text>
@@ -43,8 +43,9 @@ export default class DogWalkers extends React.Component {
     hiredDogWalkers.push(this.props.data)
   
       let date= new Date();
-      date.setHours(date.getHours() +  Math.round(date.getMinutes()/60));
-      date.setMinutes(0, 0, 0); // Resets also seconds and milliseconds
+      // date.setHours(date.getHours() +  Math.round(date.getMinutes()/60));
+      // date.setMinutes(0, 0, 0); // Resets also seconds and milliseconds
+      date.setMinutes(date.getMinutes() +  20);
       var stringDate=date.toString().split('G')[0]
       this.setState({data:hiredDogWalkers , reservedDays:stringDate})
   

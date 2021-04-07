@@ -197,7 +197,7 @@ export default class BookingScreen extends React.Component {
        );
     }else if (!this.state.renderEvent){
       return(
-        <BuySuccess precio={this.state.price}/>
+        <BuySuccess precio={this.state.price} navigation={this.props.navigation}/>
       )
     }else{
       return(

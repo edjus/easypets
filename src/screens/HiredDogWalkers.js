@@ -6,14 +6,14 @@ import DogWalkerProfile from './DogWalkerProfile'
 import {DogWalkerData} from './DogWalkerData'
 
 
-function Item ({item, dias ,callBack}){
+function Item ({item, dias ,callBack, cancel}){
   console.log("dias recibidos: ",dias)
     return (
       <View style={styles.listItem}>
         <Image source={{uri:item.photo}}  style={{width:60, height:60,borderRadius:30}} />
         <View style={{alignItems:"center",flex:1}}>
           <Text style={{fontWeight:"bold"}}>{item.name}</Text>
-          <Text>{item.distance + " km" + "  " + item.price + " /hr"} </Text>
+          <Text>{item.distance + " m" + "  " + item.price + " $/hr"} </Text>
           <AirbnbRating defaultRating={item.rating} size={20}/>
           <Text style={{fontWeight:"bold" ,marginRight:10}}>Schedule</Text>
           {dias.map((value, index)=>{
@@ -27,8 +27,8 @@ function Item ({item, dias ,callBack}){
               }
             })}
         </View>
-        <TouchableOpacity style={{height:50,width:50, justifyContent:"center",alignItems:"center"}} onPress={()=>callBack(item)}>
-          <Text style={{color:"green"}} >Cancel Hire</Text>
+        <TouchableOpacity style={{height:50,width:50, justifyContent:"center",alignItems:"center"}} onPress={()=>cancel(item)}>
+          <Text style={{color:"red"}} >Cancel Hire</Text>
         </TouchableOpacity>
       </View>
     );
@@ -41,13 +41,13 @@ export default class DogWalkers extends React.Component {
         data:[], 
         reservedDays:this.props.reservedDays,
         renderProfile:false,
-        selectedWalker:{}
+        selectedWalker:{},
       }
  
   componentDidMount(){
-
-    hiredDogWalkers.push(this.props.dogWalkerProfile)
-      this.setState({data:hiredDogWalkers , reservedDays:this.props.reservedDays})
+    var newData=[]
+      newData.push(this.props.dogWalkerProfile)
+      this.setState({data:newData , reservedDays:this.props.reservedDays})
   
   }
 
@@ -56,6 +56,12 @@ export default class DogWalkers extends React.Component {
   
     this.setState({selectedWalker:item, renderProfile:true})
     //this.props.navigation.navigate('DogWalker',{data:item});
+  }
+
+cancelHire=(currentItem)=> {
+    var newData= this.state.data.filter(item=> item.email!=currentItem.email)
+    this.setState({data:newData})
+  
   }
   render(){
     if ((!this.state.renderProfile)){
@@ -69,7 +75,7 @@ export default class DogWalkers extends React.Component {
         <FlatList
           style={{flex:1}}
           data={this.state.data}
-          renderItem={({ item}) => <Item item={item}  dias={this.state.reservedDays} callBack={this.goToDogWalkerProfile}/>}
+          renderItem={({ item}) => <Item item={item}  dias={this.state.reservedDays} callBack={this.goToDogWalkerProfile} cancel={this.cancelHire}/>}
           keyExtractor={item => item.email}
         />:
         <DogWalkerProfile data={this.state.selectedWalker} navigation={this.props.navigation} parentScreen={"DogWalkers"}/> 

@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     flex: 1,
-    marginTop:40
+    marginTop:20
   },
   carouselContainer: {
     minHeight: 250

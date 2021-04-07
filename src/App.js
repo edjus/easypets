@@ -20,11 +20,14 @@ import Profile from './screens/Profile'
 import { Ionicons, MaterialCommunityIcons,Foundation,FontAwesome5,FontAwesome,AntDesign,Entypo  } from '@expo/vector-icons';
 import Market from './screens/Market/Market'
 import Events from './screens/Events/EventsScreen'
+import Home from './screens/Home';
+
+import Onboarding from './screens/Onboarding'
 
 const profileData={
-  name: "John  Wick",
-  photo:'../../assets/johnWick.png',
-  email: 'IkillYouIfYouTouchMyDog@WickLove.com'
+  name: "Edson Justo",
+  photo:'../../assets/ed.png',
+  email: 'justo.edson@gmail.com'
 }
 
 const Header =({name, openDrawer})=> (
@@ -57,13 +60,17 @@ class Sidebar extends React.Component {
   state = {
       routes:[
           {
-              name:"LogIn/LogOut",
-              icon:<AntDesign name="login" size={32} color="red" />
-          },
+            name:"Home",
+            icon:<AntDesign name="home" size={32} color="red" />
+        },
           // {
           //     name:"Register",
           //     icon:<FontAwesome5 name="user-plus" size={32} color="red" />
           // },
+        {
+          name:"MyPets",
+          icon:<MaterialCommunityIcons name="dog" size={32} color="red" />
+        },
           {
               name:"Market",
               icon: <Entypo name="shop" size={32} color="red" />
@@ -74,15 +81,6 @@ class Sidebar extends React.Component {
             icon:<FontAwesome name="birthday-cake" size={32} color="red" />
 
         },
-          {
-            name:"Profile",
-            icon:<FontAwesome5 name="dog" size={32} color="red" />
-        },
-       
-        {
-          name:"MyPets",
-          icon:<MaterialCommunityIcons name="dog" size={32} color="red" />
-        },
         {
           name:"DogWalkers",
           icon:<Foundation name="guide-dog" size={32} color="red" />
@@ -91,7 +89,10 @@ class Sidebar extends React.Component {
           name:"DogMap",
           icon:<FontAwesome name="map" size={32} color="red" />
         },
-
+        {
+          name:"LogOut",
+          icon:<AntDesign name="login" size={32} color="red" />
+      },
       ]
   }
 
@@ -100,7 +101,7 @@ class Sidebar extends React.Component {
       return (
           <View style={styles.container}>
               <TouchableOpacity onPress={()=>this.props.navigation.navigate('Profile')}>
-              <Image source={require("../assets/johnWick.png")} style={styles.profileImg} resizeMode="contain"/>
+              <Image source={require("../assets/ed.png")} style={styles.profileImg} resizeMode="contain"/>
               </TouchableOpacity>
               <Text style={{fontWeight:"bold",fontSize:16,marginTop:10}}>{profileData.name}</Text>
               <Text style={{color:"gray",marginBottom:10}}>{profileData.email}</Text>
@@ -118,18 +119,21 @@ class Sidebar extends React.Component {
 
 const Drawer = createDrawerNavigator(
   {
-    'LogIn/LogOut':{ screen: Login},
+    
     // Register:{ screen: Register},
+    Home: {screen: Onboarding},
     Market:{ screen: Market},
     Events:{ screen:Events},
     Profile:{screen: Profile},
     MyPets:{screen: Mascotas},
     DogWalkers:{screen:DogWalkers},
-    DogMap:{screen:DogMap}
-
+    DogMap:{screen:DogMap},
+    DetalleMascota: {screen: DetalleMascota},
+    'LogOut':{ screen: Login},
+    
   },
   {
-    initialRouteName: "LogIn/LogOut",
+    initialRouteName: "Home",
     unmountInactiveRoutes: true,
     headerMode: "none",
     contentComponent: props => <Sidebar {...props} />
@@ -140,7 +144,7 @@ const AppNavigator = createStackNavigator(
   {
     Drawer : {screen: Drawer,
       navigationOptions: {
-      header: null,
+        headerShown: false
     }},
 
   },

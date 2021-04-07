@@ -9,7 +9,7 @@ export default function Header({ name, openDrawer }) {
         <TouchableOpacity onPress={() => openDrawer()}>
           <Ionicons name="ios-menu" size={32} />
         </TouchableOpacity>
-        <Text>{name}</Text>
+        <Text >{name}</Text>
         <Text style={{ width: 50 }}></Text>
       </View>
       )
@@ -30,15 +30,15 @@ const styles = StyleSheet.create({
       flexDirection:"row",
   },
   title:{
-      fontSize:18,
-      marginLeft:20
+      fontSize:20,
+      marginLeft:20,
+     
   },
   header:{
     width:"100%",
     height:60,
     flexDirection:"row",
     justifyContent: 'flex-start',
-
     paddingHorizontal:20
   },
   profileImg:{

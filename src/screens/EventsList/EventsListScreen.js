@@ -12,6 +12,7 @@ import { getCategoryName, getEvents } from '../../database/MockDataAPI';
 import Header from '../../components/Header';
 import Event  from '../Event/EventScreen'
 import Events  from '../Events/EventsScreen'
+import { ScrollView } from 'react-native-gesture-handler';
 export default class EventsListScreen extends React.Component {
 
   constructor(props) {
@@ -50,20 +51,20 @@ export default class EventsListScreen extends React.Component {
     const item= this.props.category;
     const recipesArray = getEvents(item.id);
     return (
-      <View style={{marginTop:40}}>
-      <Header name="Events" openDrawer={this.props.navigation.openDrawer}/>
-        <FlatList
-          vertical
-          showsVerticalScrollIndicator={false}
-          numColumns={2}
-          data={recipesArray}
-          renderItem={this.renderRecipes}
-          keyExtractor={item => `${item.recipeId}`}
-        />
-          <TouchableOpacity  onPress={()=>this.goBack()}>
-                <Image style={styles.roundButton3} source={require('../../../assets/back.png')}/>
-        </TouchableOpacity>
-      </View>
+      <ScrollView style={{marginTop:40}}>
+        <Header name="Events" openDrawer={this.props.navigation.openDrawer}/>
+          <FlatList
+            vertical
+            showsVerticalScrollIndicator={false}
+            numColumns={2}
+            data={recipesArray}
+            renderItem={this.renderRecipes}
+            keyExtractor={item => `${item.recipeId}`}
+          />
+            <TouchableOpacity  onPress={()=>this.goBack()}>
+                  <Image style={styles.roundButton3} source={require('../../../assets/back.png')}/>
+          </TouchableOpacity>
+      </ScrollView>
     );
     }else if(this.state.renderEvent){
       return(

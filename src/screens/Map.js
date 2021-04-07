@@ -25,9 +25,9 @@ const initialRegion={
 
 const minimunDistance=500;
 const maximumDistance=3000;
-const colors =['red','blue','green', 'yellow', 'black']
+const colors =['darkred','darkblue','green', 'yellow', 'hotpink','cyan', 'darkgreen','gold','darkviolet','dodgerblue', 'indigo','mediumseagreen']
 
-const ubicaciones=['obeliscpo','Fiuba','Casa Rosadaa','Teatro Colon','Sanches de bustamente 666']
+
 
 const current_location={coords:{latitude:-34.61745 , longitude:-58.36795}};
 
@@ -160,7 +160,7 @@ export default class  Map extends React.Component {
   if(!this.state.renderProfile){
     return (
    
-       <KeyboardAwareScrollView style={{marginTop:40}}>
+       <KeyboardAwareScrollView style={{marginTop:20}}>
         <Header name="DogMap" openDrawer={this.props.navigation.openDrawer}/>
         
            <>
@@ -180,6 +180,7 @@ export default class  Map extends React.Component {
 
                 <Marker  key={100} title ='here you are' coordinate={this.state.location.coords}
                   pinColor='blue'
+                  image={require('../../assets/youAreHere.png')}
                   >
                 
                 </Marker>
@@ -266,7 +267,7 @@ const styles = StyleSheet.create({
     mapStyle: {
      // ...StyleSheet.absoluteFillObject,
      width: Dimensions.get('window').width,
-      height: Dimensions.get('window').height-100,
+      height: Dimensions.get('window').height-200,
       
      
     },

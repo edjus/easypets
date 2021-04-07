@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import {StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import {ImageBackground,StyleSheet, Text, Image,View, TextInput,Dimensions, TouchableOpacity, Alert } from 'react-native';
 import { useDispatch,useSelector } from 'react-redux';
 import { login,logout } from '../redux/actions/auth';
 import { validateEmail, validatePassword} from '../validation/userValidation'
 import Header from '../components/Header';
-
+const { height, width } = Dimensions.get('screen');
+import { Images, nowTheme } from '../constants/';
 export default function Login (props){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -80,7 +81,11 @@ export default function Login (props){
         return (
             <View  style={styles.container}>
              <Header name="Login" openDrawer={props.navigation.openDrawer}/>
-                <Text style={styles.logo}>EasyPet</Text>
+             <ImageBackground  source={Images.Onboarding}   style={{ flex: 1, height: height, width:width, zIndex: 1 }}>
+             <View>
+              <Image source={Images.NowLogo} style={{ width: 130, height: 150,alignSelf:'center'}} />
+              </View>
+                {/* <Text style={styles.logo}>EasyPet</Text> */}
                 <View style={styles.inputView}>
                     <TextInput
                         style={styles.inputText}
@@ -110,9 +115,10 @@ export default function Login (props){
                         style={styles.loginText}
                         onPress={showRegisterForm}>
                         
-                        Signup
+                        Not registered? Signup
                     </Text>
                 </TouchableOpacity>
+                </ImageBackground>
             </View>
         )
     
@@ -122,7 +128,7 @@ export default function Login (props){
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
-    paddingTop:40,
+    paddingTop:20,
     alignItems:"center",
     flex:1
 
@@ -135,8 +141,9 @@ const styles = StyleSheet.create({
     },
     inputView:{
       width:"80%",
-      backgroundColor:"#465881",
-      borderRadius:25,
+      backgroundColor:"#4334eb",
+      borderRadius:30,
+      alignSelf:'center',
       height:50,
       marginBottom:20,
       justifyContent:"center",
@@ -153,14 +160,22 @@ const styles = StyleSheet.create({
     loginBtn:{
       width:"80%",
       backgroundColor:"#fb5b5a",
-      borderRadius:25,
+      borderRadius:20,
       height:50,
       alignItems:"center",
       justifyContent:"center",
       marginTop:40,
-      marginBottom:10
+      marginBottom:10,
+      alignSelf:'center',
     },
     loginText:{
-      color:"white"
-    }
+      color:"white",
+      alignSelf:'center',
+      fontSize:20
+    },
+    image: {
+      flex: 1,
+      resizeMode: "cover",
+      justifyContent: "center"
+    },
   });

@@ -7,6 +7,8 @@ const userTypeValues=[ "Client", "Dog Walker", "Food Provider","Events Provider"
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import Calendar from '../components/Calendar/Calendar'
 import Map from './Map';
+import { ScrollView } from 'react-native-gesture-handler';
+import DogWalkers from './DogWalkers'
 
 export default class DogWalkerProfile  extends React.Component{
 
@@ -15,21 +17,16 @@ export default class DogWalkerProfile  extends React.Component{
         parent:this.props.parentScreen,
         calendar:false,
         map:false,
-        navigation: this.props.navigation
+        navigation: this.props.navigation,
+        renderDogWalkers:false
     }
 
 
     
 
     goBack=()=> {
-      console.log("go back  clicked" , typeof(this.props.parentScreen), " ", this.state.parent)
+      this.setState({renderDogWalkers:true})
       
-        if(this.props.parentScreen=="Map"){
-           console.log("go back  clicked" , typeof(this.props.parentScreen), " ", this.state.parent)
-           this.state.navigation.navigate('DogMap');
-        }else if(this.props.parentScreen=="DogWalkers"){
-           this.state.navigation.navigate("DogWalkers");
-        }
     }
     showCalendar=()=> {
       this.setState({calendar:true})
@@ -40,11 +37,12 @@ export default class DogWalkerProfile  extends React.Component{
 
     }
     render(){
-      if ((!this.state.calendar)&&( !this.state.map)){
+      if ((!this.state.calendar)&&( !this.state.renderDogWalkers)){
         return(
-           
+            <ScrollView>
+
             <View style={styles.container}>
-            <Header name="DogWalkers" openDrawer={this.props.navigation.openDrawer}/>
+              <Header name="DogWalkers" openDrawer={this.props.navigation.openDrawer}/>
                 <Text style={styles.logo}>Dog Walker</Text>
                 <View style={{flexDirection:"row" }}>
                     <View style={{flex:1, marginLeft:50}}>
@@ -84,21 +82,22 @@ export default class DogWalkerProfile  extends React.Component{
                 />
                  </View>
                  <View style={{ flex: 1, flexDirection: 'row' }}>
-                 <TouchableOpacity  onPress={()=>this.showShowMap()}>
+                 {/* <TouchableOpacity  onPress={()=>this.showShowMap()}>
                  <Image style={styles.roundButton1} source={require('../../assets/mapa.png')} />
+                </TouchableOpacity> */}
+                <TouchableOpacity  onPress={()=>this.goBack()}>
+                  <Image style={styles.roundButton3} source={require('../../assets/back.png')}/>
                 </TouchableOpacity>
                  <TouchableOpacity  onPress={()=>this.showCalendar()}>
-                 <Image style={styles.roundButton2} source={require('../../assets/calendar.png')} />
+                 <Image style={styles.roundButton3} source={require('../../assets/calendar.png')} />
                     {/* <Text style={styles.loginText} >Show Calendar</Text> */}
                 </TouchableOpacity>
       
+                
+                
                 </View>
-                <TouchableOpacity  onPress={()=>this.goBack()}>
-                <Image style={styles.roundButton3} source={require('../../assets/back.png')}/>
-                </TouchableOpacity>
-
             </View>
-        
+            </ScrollView>
         )
       }else if (this.state.calendar){
         return(
@@ -106,25 +105,18 @@ export default class DogWalkerProfile  extends React.Component{
         )
       }else{
         return(
-          <Map   selectedWalker={this.state.profileData}/>
+          <DogWalkers navigation={this.props.navigation}   />
         )
       }
-          
-
     }
-
-
-
-
 }
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
-    paddingTop:40,
+    paddingTop:20,
     alignItems:"center",
     flex:1
-
   },
     logo:{
       fontWeight:"bold",
@@ -195,7 +187,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       padding: 0,
-      marginTop:5,
+      marginTop:40,
       marginBottom:20,
       marginRight:40,
       borderRadius: 100,

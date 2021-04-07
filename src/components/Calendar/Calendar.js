@@ -209,7 +209,7 @@ export default class Calendar  extends React.Component{
         return (
             <ScrollView >
             <View style={{ flex: 1 , borderWidth: 1,
-                borderColor: '#F44336',margin:10, marginTop:10}}>
+                borderColor: '#F44336',margin:10, marginTop:20}}>
                 {this.renderLeyend()}
                 { this.renderHeader()}
                 {this.state.datos.map((items, index) => {
@@ -225,13 +225,13 @@ export default class Calendar  extends React.Component{
                         );
                     })}
                     <View style={{ flex: 1, flexDirection: 'row' }}>
+                    <TouchableOpacity  onPress={()=>this.goBack()}>
+                            <Image style={styles.roundButton3} source={require('../../../assets/back.png')}/>
+                    </TouchableOpacity> 
                     <TouchableOpacity  onPress={()=>this.reservar()}>
                         <Image style={styles.roundButton3} source={require('../../../assets/hired.png')}/>
                     </TouchableOpacity> 
-                    <TouchableOpacity  onPress={()=>this.goBack()}>
-                <Image style={styles.roundButton3} source={require('../../../assets/back.png')}/>
-                    {/* <Text style={styles.loginText} >Go Back</Text> */}
-                </TouchableOpacity> 
+                  
                     </View>     
             </View>
               
@@ -254,7 +254,7 @@ export default class Calendar  extends React.Component{
 
 const styles = StyleSheet.create({
     text: {
-      fontSize: 16,
+      fontSize: 24,
       textAlign:'center',
       textAlignVertical:'center',
 
