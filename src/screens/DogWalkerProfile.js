@@ -7,6 +7,7 @@ const userTypeValues=[ "Client", "Dog Walker", "Food Provider","Events Provider"
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import Calendar from '../components/Calendar/Calendar'
 import Map from './Map';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default class DogWalkerProfile  extends React.Component{
 
@@ -23,7 +24,6 @@ export default class DogWalkerProfile  extends React.Component{
 
     goBack=()=> {
       console.log("go back  clicked" , typeof(this.props.parentScreen), " ", this.state.parent)
-      
         if(this.props.parentScreen=="Map"){
            console.log("go back  clicked" , typeof(this.props.parentScreen), " ", this.state.parent)
            this.state.navigation.navigate('DogMap');
@@ -42,9 +42,10 @@ export default class DogWalkerProfile  extends React.Component{
     render(){
       if ((!this.state.calendar)&&( !this.state.map)){
         return(
-           
+            <ScrollView>
+
             <View style={styles.container}>
-            <Header name="DogWalkers" openDrawer={this.props.navigation.openDrawer}/>
+              <Header name="DogWalkers" openDrawer={this.props.navigation.openDrawer}/>
                 <Text style={styles.logo}>Dog Walker</Text>
                 <View style={{flexDirection:"row" }}>
                     <View style={{flex:1, marginLeft:50}}>
@@ -84,9 +85,9 @@ export default class DogWalkerProfile  extends React.Component{
                 />
                  </View>
                  <View style={{ flex: 1, flexDirection: 'row' }}>
-                 <TouchableOpacity  onPress={()=>this.showShowMap()}>
+                 {/* <TouchableOpacity  onPress={()=>this.showShowMap()}>
                  <Image style={styles.roundButton1} source={require('../../assets/mapa.png')} />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                  <TouchableOpacity  onPress={()=>this.showCalendar()}>
                  <Image style={styles.roundButton2} source={require('../../assets/calendar.png')} />
                     {/* <Text style={styles.loginText} >Show Calendar</Text> */}
@@ -94,11 +95,10 @@ export default class DogWalkerProfile  extends React.Component{
       
                 </View>
                 <TouchableOpacity  onPress={()=>this.goBack()}>
-                <Image style={styles.roundButton3} source={require('../../assets/back.png')}/>
+                  <Image style={styles.roundButton3} source={require('../../assets/back.png')}/>
                 </TouchableOpacity>
-
             </View>
-        
+            </ScrollView>
         )
       }else if (this.state.calendar){
         return(
@@ -109,13 +109,7 @@ export default class DogWalkerProfile  extends React.Component{
           <Map   selectedWalker={this.state.profileData}/>
         )
       }
-          
-
     }
-
-
-
-
 }
 
 const styles = StyleSheet.create({
@@ -124,7 +118,6 @@ const styles = StyleSheet.create({
     paddingTop:40,
     alignItems:"center",
     flex:1
-
   },
     logo:{
       fontWeight:"bold",

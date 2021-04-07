@@ -16,7 +16,7 @@ export default function Mascotas ({navigation}) {
   }, [])
 
   const enlazar = (dog) => {
-    navigation.navigate("Profile", {dog})
+    navigation.navigate("DetalleMascota", {dog})
   };
 
   const onAddPet = () => {

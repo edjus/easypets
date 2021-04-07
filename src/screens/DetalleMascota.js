@@ -52,7 +52,7 @@ export default function DetalleMascota ({navigation}) {
 
   return (
     <ScrollView style={styles.container}>
-        <Header name="Profile" openDrawer={navigation.openDrawer}/>
+        <Header name="Pet Detail" openDrawer={navigation.openDrawer}/>
         <Modal
           animationType="slide"
           transparent={true}
@@ -165,7 +165,8 @@ export default function DetalleMascota ({navigation}) {
 const styles = StyleSheet.create({
     container: {
       backgroundColor: "#fff",
-      flex:1
+      flex:1,
+      marginTop: 20,
     },
     logo:{
       fontWeight:"bold",

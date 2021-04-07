@@ -12,6 +12,7 @@ import { categories } from '../../database/dataArrays';
 import { getNumberOfRecipes } from '../../database/MockDataAPI';
 import Header from '../../components/Header';
 import EventList from '../EventsList/EventsListScreen'
+import { ScrollView } from 'react-native-gesture-handler';
 export default class EventsScreen extends React.Component {
   
   constructor(props) {
@@ -60,9 +61,6 @@ export default class EventsScreen extends React.Component {
           renderItem={this.renderCategory}
           keyExtractor={item => `${item.id}`}
         />
-         <TouchableOpacity  onPress={()=>this.goBack()}>
-                <Image style={styles.roundButton3} source={require('../../../assets/back.png')}/>
-        </TouchableOpacity>
       </View>
     );
     }else{

@@ -10,9 +10,9 @@ import Map from './Map';
 // import image from '../../assets/johnWick.jfif'
 
 const profileData={
-    name: "John  Wick",
-    photo:'../../assets/johnWick.jfif',
-    email: 'IkillYouIfYouTouchMyDog@WickLove.com'
+    name: "Edson Justo",
+    photo:'../../assets/ed.png',
+    email: 'edson.justo@gmail.com'
 }
 export default class DogWalkerProfile  extends React.Component{
 
@@ -47,7 +47,7 @@ export default class DogWalkerProfile  extends React.Component{
                 <Text style={styles.logo}>Profile</Text>
                 <View style={{flexDirection:"row" }}>
                     <View style={{flex:1, alignSelf:'center'}}>
-                    <Image source={require('../../assets/johnWick.png')}  style={{width:120, height:200,alignSelf:'center'}} />
+                    <Image source={require('../../assets/ed.png')}  style={{width:120, height:200,alignSelf:'center'}} />
                     </View>
                 </View>
                 <Text style={styles.titleText}> Name</Text>
@@ -98,14 +98,14 @@ const styles = StyleSheet.create({
   },
     logo:{
       fontWeight:"bold",
-      fontSize:50,
+      fontSize:40,
       color:"#fb5b5a",
       marginBottom:20
     },
     inputView:{
       width:"90%",
-      backgroundColor:"#465881",
-      borderRadius:25,
+      backgroundColor:"#6c89f5",
+      borderRadius:10,
       height:40,
       marginTop:0,
       justifyContent:"center",
