@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image , TouchableOpacity} from 'react-native';
 import { Icon } from 'react-native-elements'
+import { ScrollView } from 'react-native-gesture-handler';
 import Home from './Onboarding'
 
 export default function BuySuccessScreen ({navigation,precio}) {
@@ -16,6 +17,7 @@ export default function BuySuccessScreen ({navigation,precio}) {
   const price=precio;
   if(!renderHome){
   return (
+    <ScrollView>
     <View  style={styles.container}>
       <Icon 
         name="check-circle" 
@@ -38,12 +40,13 @@ export default function BuySuccessScreen ({navigation,precio}) {
           AMOUNT PAID
         </Text>
         <Text style={styles.yellowText}>
-          {price}
+          US$ {price}
         </Text>
         <TouchableOpacity  onPress={()=>goHome()}>
                 <Image style={styles.roundButton3} source={require('../../assets/dogHouse.png')}/>
         </TouchableOpacity>
     </View>
+    </ScrollView>
   );  }
   else{
     return(

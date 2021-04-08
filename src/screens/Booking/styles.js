@@ -83,7 +83,6 @@ const styles = StyleSheet.create({
     color: '#2cd18a'
   },
   infoDescriptionRecipe: {
-    textAlign: 'left',
     fontSize: 16,
     marginBottom: 5,
   },
@@ -93,7 +92,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
     textAlign: 'center'
-  }
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    paddingTop: 5,
+  },
 });
 
 export default styles;

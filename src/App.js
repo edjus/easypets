@@ -17,10 +17,13 @@ import DogMap from './screens/Map'
 import {Provider} from 'react-redux';
 import configureStore from './redux/configureStore'
 import Profile from './screens/Profile'
-import { Ionicons, MaterialCommunityIcons,Foundation,FontAwesome5,FontAwesome,AntDesign,Entypo  } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons,Foundation,FontAwesome,AntDesign,Entypo  } from '@expo/vector-icons';
 import Market from './screens/Market/Market'
 import Events from './screens/Events/EventsScreen'
-import Home from './screens/Home';
+
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreAllLogs();
 
 import Onboarding from './screens/Onboarding'
 

@@ -4,7 +4,6 @@ import { Block, Button, Text, theme } from 'galio-framework';
 
 const { height, width } = Dimensions.get('screen');
 import { Images, nowTheme } from '../constants/';
-import { HeaderHeight } from '../constants/utils';
 import Home from './Home'
 import Header from '../components/Header';
 var InitialState=false;
@@ -49,7 +48,7 @@ export default class Onboarding extends React.Component {
           <Block space="between" style={styles.padded}>
             <Block>
               <Block middle>
-                <Image source={Images.NowLogo} style={{ width: 130, height: 150,left:70, bottom: 250 }} />
+                <Image source={Images.Logo} style={{ width: 130, height: 150,left:70, bottom: 150 }} />
               </Block>
               <Block>
                 <Block middle>
@@ -141,6 +140,7 @@ const styles = StyleSheet.create({
   },
   padded: {
     paddingHorizontal: theme.SIZES.BASE * 2,
+    paddingTop: 500,
     zIndex: 3,
     position: 'absolute',
     bottom: Platform.OS === 'android' ? theme.SIZES.BASE * 2 : theme.SIZES.BASE * 3

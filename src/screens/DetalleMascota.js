@@ -11,7 +11,7 @@ export default function DetalleMascota ({navigation}) {
   const mascota = navigation.getParam('dog');
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVaccinesVisible, setModalVaccinesVisible] = useState(false);
-  const [newVaccine, setNewVaccine] = useState(null);
+  const [newVaccine, setNewVaccine] = useState("anti-rabies");
   const [changed, setChanged] = useState(false);
 
   const setTratamiento = (text) => {
@@ -69,7 +69,7 @@ export default function DetalleMascota ({navigation}) {
               </Text>
               <TextInput
                 style={styles.inputText}
-                value={mascota.treatment}
+                value={"Take 2 pills at 4 pm everyday"}
                 onChangeText={texto=>setTratamiento(texto)}
               />
               <Pressable

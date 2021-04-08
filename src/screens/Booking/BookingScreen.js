@@ -30,29 +30,29 @@ export default class BookingScreen extends React.Component {
           id: 1,
           label: 'VISA ending in 357',
           size: 20,
-          color: "#00cc99",
+          color: "#042d6e",
           selected:true,
         },
         {
           id: 2,
           label: 'MASTERCARD ending in 879',
           size: 20,
-          color: "#00cc99",
+          color: "#042d6e",
         },
       ],
       place: [
         {
           id: 1,
-          label: 'Garden',
+          label: 'Outdoor',
           size: 20,
-          color: "#00cc99",
+          color: "#042d6e",
           selected:true,
         },
         {
           id: 2,
-          label: 'Hall',
+          label: 'Indoor',
           size: 20,
-          color: "#00cc99",
+          color: "#042d6e",
         },
       ],
       date: new Date(),
@@ -121,30 +121,32 @@ export default class BookingScreen extends React.Component {
               <Icon
                 name='paw'
                 size={20}
-                color='black'
+                color='#042d6e'
               />
             }
           />
           <View>
-            <View>
-              <Text style={styles.infoDescriptionRecipe}>
+            <View style={styles.rowContainer}>
                 <Icon
                   name='calendar'
                   size={20}
-                  color='black'
+                  color='#042d6e'
+                  style={{marginRight: 10}}
                   onPress={this.showDatepicker}
                 />
+              <Text style={styles.infoDescriptionRecipe} onPress={this.showDatepicker}>
                   {this.state.date.toDateString()}
-              </Text>
+                </Text>
             </View>
-            <View>
-              <Text style={styles.infoDescriptionRecipe}>
-                <Icon
-                  name='ambulance'
-                  size={20}
-                  color='black'
-                  onPress={this.showTimepicker}
-                />
+            <View style={styles.rowContainer}>
+              <Icon
+                name='clock-o'
+                size={20}
+                color='#042d6e'
+                onPress={this.showTimepicker}
+                style={{marginRight: 10}}
+              />
+              <Text style={styles.infoDescriptionRecipe} onPress={this.showTimepicker}>
                 {this.state.date.toLocaleTimeString()}
               </Text>
             </View>
@@ -172,7 +174,6 @@ export default class BookingScreen extends React.Component {
             onPress={this.onPress}
           />
         </Card>
-
         <Card>
           <Text style={styles.infoRecipe}>Payment Card</Text>
           <RadioGroup 

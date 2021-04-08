@@ -180,7 +180,7 @@ export default class  Map extends React.Component {
 
                 <Marker  key={100} title ='here you are' coordinate={this.state.location.coords}
                   pinColor='blue'
-                  image={require('../../assets/youAreHere.png')}
+                  image={require('../../assets/here.png')}
                   >
                 
                 </Marker>

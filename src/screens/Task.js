@@ -4,6 +4,7 @@ import {Picker} from '@react-native-picker/picker';
 //import defaultImage from '../assets/images/defaultImage.png';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
+import { Images, nowTheme } from '../constants/';
 const defaultImage='../assets/icon.png'
 import Header from '../components/Header';
 import { addPet } from '../services/PetsService';
@@ -11,13 +12,13 @@ import Mascotas from './Mascotas'
 export default class Task extends React.Component{
 
     state={
-        name:"",
-        breed:"",
-        weight:"",
-        sex:"",
-        birthday: "",
+        name:"Milo",
+        breed:"Unknow",
+        weight:"10",
+        sex:"MALE",
+        birthday: "12/03/2021",
         fileData: null,
-        fileUri:'https://www.hola.com/imagenes/estar-bien/20200828174216/razas-perro-dalmata-gt/0-859-148/dalmata-t.jpg', // valor por defecto
+        fileUri:'https://scontent.feze7-2.fna.fbcdn.net/v/t1.18169-9/10409273_938255069547690_807642562851049759_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=730e14&_nc_ohc=bOldjHYNbmYAX_eoIxk&_nc_ht=scontent.feze7-2.fna&oh=4839100c94f4aafd93742b0610c4ab65&oe=6094417B', // valor por defecto
         renderMyPets:false,
     }
 
@@ -105,6 +106,7 @@ export default class Task extends React.Component{
                   <TextInput
                       style={styles.inputText}
                       placeholder={"Name..."}
+                      value={this.state.name}
                       placeholderTextColor="white"
                       onChangeText={text=>this.setState({name:text})}
                   />
@@ -113,6 +115,7 @@ export default class Task extends React.Component{
                   <TextInput
                       style={styles.inputText}
                       placeholder={"Breed..."}
+                      value={this.state.breed}
                       placeholderTextColor="white"
                       onChangeText={text=>this.setState({breed:text})}
                   />
@@ -132,7 +135,8 @@ export default class Task extends React.Component{
                 <View style={styles.inputView}>
                 <TextInput
                     style={styles.inputText}
-                   placeholder={"Weight...(kg)"}
+                    placeholder={"Weight...(kg)"}
+                    value={this.state.weight}
                     placeholderTextColor="white"
                     onChangeText={text=>this.setState({weight:text})}
                 />
@@ -140,7 +144,8 @@ export default class Task extends React.Component{
                 <View style={styles.inputView}>
                 <TextInput
                     style={styles.inputText}
-                   placeholder={"Birthday...(dd/mm/yyyy)"}
+                    placeholder={"Birthday...(dd/mm/yyyy)"}
+                    value={this.state.birthday}
                     placeholderTextColor="white"
                     onChangeText={text=>this.setState({birthday:text})}
                 />
